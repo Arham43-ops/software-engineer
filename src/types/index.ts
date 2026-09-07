@@ -55,6 +55,7 @@ export interface Education {
     startDate: string;
     endDate?: string;
     isOngoing: boolean;
+    location?: string;
     gpa?: string;
     activities?: string[];
     achievements?: string[];
