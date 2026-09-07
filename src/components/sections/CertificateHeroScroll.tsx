@@ -1,332 +1,256 @@
 "use client";
 
-import { useEffect, useRef, useCallback, type FC, useState, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState, type FC } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useTheme } from "next-themes";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { usePerformance } from "@/hooks/usePerformance";
-import { ChevronDown } from "lucide-react";
-import { portfolioData } from "@/data/portfolio";
-
-interface ImageItem {
-    id: string;
-    src: string;
-    alt: string;
-    isPdf: boolean;
-}
-
-interface Position {
-    top: number;
-    left: number;
-    width: number;
-    height: number;
-    borderRadius: number;
-    zIndex?: number;
-}
-
-interface Positions {
-    initial: Record<string, Position>;
-    final: Record<string, Position>;
-}
+import { ChevronDown, ExternalLink } from "lucide-react";
 
 interface CertificateHeroScrollProps {
     onDownloadClick?: () => void;
     isLowPowerMode?: boolean;
 }
 
-const CERTIFICATE_POOL = [
-    "Data Analytics on Google Cloud.webp",
-    "Deep Learning Beginner.webp",
-    "Docker, Kubernetes dan DevOps.webp",
-    "Fullstack Programming Untuk Pemula.webp",
-    "Introduction to Generative AI.webp",
-    "Machine Learning Foundations.webp",
-    "Mastering Smart Contract.webp",
-    "Started with Databases.webp",
-    "Supervised Machine Learning Regression and Classification.webp",
-    "elevAIte with Dicoding Program 2025.webp"
+interface CertificateItem {
+    name: string;
+    image: string;
+    pdf: string;
+}
+
+const CERTIFICATES: CertificateItem[] = [
+    {
+        name: "AI Infrastructure and Operations Fundamentals",
+        image: "/Certificate/AI Infrastructure and Operations Fundamentals.png",
+        pdf: "/Certificate/AI Infrastructure and Operations Fundamentals.pdf",
+    },
+    {
+        name: "AI and Machine Learning Algorithms and Techniques",
+        image: "/Certificate/AI and Machine Learning Algorithms and Techniques.png",
+        pdf: "/Certificate/AI and Machine Learning Algorithms and Techniques.pdf",
+    },
+    {
+        name: "Accelerate Your Job Search with AI",
+        image: "/Certificate/Accelerate Your Job Search with AI.png",
+        pdf: "/Certificate/Accelerate Your Job Search with AI.pdf",
+    },
+    {
+        name: "Advanced Ethical Hacking & Cybersecurity",
+        image: "/Certificate/Advanced Ethical Hacking & Cybersecurity.png",
+        pdf: "/Certificate/Advanced Ethical Hacking & Cybersecurity.pdf",
+    },
+    {
+        name: "Website Design and Development Internship",
+        image: "/Certificate/Arham Topiwala - Website Design and Development Internship - Internship.png",
+        pdf: "/Certificate/Arham Topiwala - Website Design and Development Internship - Internship.pdf",
+    },
+    {
+        name: "Website Design and Development Internship — Offer Letter",
+        image: "/Certificate/Arham Topiwala - Website Design and Development Internship - Offer Letter.png",
+        pdf: "/Certificate/Arham Topiwala - Website Design and Development Internship - Offer Letter.pdf",
+    },
+    {
+        name: "Website Design and Development Internship — Training",
+        image: "/Certificate/Arham Topiwala - Website Design and Development Internship - Training.png",
+        pdf: "/Certificate/Arham Topiwala - Website Design and Development Internship - Training.pdf",
+    },
+    {
+        name: "Chatbots",
+        image: "/Certificate/Chatbots.png",
+        pdf: "/Certificate/Chatbots.pdf",
+    },
+    {
+        name: "Create Interactive Dashboards with Streamlit and Python",
+        image: "/Certificate/Create Interactive Dashboards with Streamlit and Python.png",
+        pdf: "/Certificate/Create Interactive Dashboards with Streamlit and Python.pdf",
+    },
+    {
+        name: "Ethical Hacking Specialization",
+        image: "/Certificate/Ethical Hacking Specialization.png",
+        pdf: "/Certificate/Ethical Hacking Specialization.pdf",
+    },
+    {
+        name: "Fast Prototyping of GenAI Apps with Streamlit",
+        image: "/Certificate/Fast Prototyping of GenAI Apps with Streamlit.png",
+        pdf: "/Certificate/Fast Prototyping of GenAI Apps with Streamlit.pdf",
+    },
+    {
+        name: "Game Developers and Esports Organizations",
+        image: "/Certificate/Game Developers and Esports Organizations.png",
+        pdf: "/Certificate/Game Developers and Esports Organizations.pdf",
+    },
+    {
+        name: "IBM Generative AI for Cybersecurity Professionals",
+        image: "/Certificate/IBM Generative AI for Cybersecurity Professionals.png",
+        pdf: "/Certificate/IBM Generative AI for Cybersecurity Professionals.pdf",
+    },
+    {
+        name: "Introduction to Networking",
+        image: "/Certificate/Introduction to Networking.png",
+        pdf: "/Certificate/Introduction to Networking.pdf",
+    },
+    {
+        name: "Oracle Cloud and AI",
+        image: "/Certificate/Oracle Cloud and AI.png",
+        pdf: "/Certificate/Oracle Cloud and AI.pdf",
+    },
+    {
+        name: "System & Network Security Essentials",
+        image: "/Certificate/System & Network Security Essentials.png",
+        pdf: "/Certificate/System & Network Security Essentials.pdf",
+    },
+    {
+        name: "JavaScript Intermediate Certificate",
+        image: "/Certificate/javascript_intermediate certificate.png",
+        pdf: "/Certificate/javascript_intermediate certificate.pdf",
+    },
+    {
+        name: "Software Engineer Certificate",
+        image: "/Certificate/software_engineer certificate.png",
+        pdf: "/Certificate/software_engineer certificate.pdf",
+    },
 ];
 
-const CertificateHeroScroll: FC<CertificateHeroScrollProps> = ({ onDownloadClick, isLowPowerMode: isLowPowerModeProp }) => {
+const encodePath = (path: string) => encodeURI(path);
+
+const CertificateHeroScroll: FC<CertificateHeroScrollProps> = ({ isLowPowerMode = false }) => {
     const spacerRef = useRef<HTMLDivElement>(null);
-    const fixedContainerRef = useRef<HTMLDivElement>(null);
-    const heroContentRef = useRef<HTMLDivElement>(null);
-    const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const { isLowPowerMode: performanceLowPower, isMobile } = usePerformance();
-    const isLowPowerMode = isLowPowerModeProp ?? performanceLowPower;
+    const fixedRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const cardsRef = useRef<HTMLDivElement>(null);
+    const [activeCertificate, setActiveCertificate] = useState(0);
 
-    // Select and randomize certificates on mount to avoid hydration mismatch
-    const [randomCertificates, setRandomCertificates] = useState<ImageItem[]>([]);
-
-    const createCertItem = useCallback((filename: string): ImageItem => ({
-        id: filename.replace(/\s+/g, '-').toLowerCase(),
-        src: `/certificate/${filename}`,
-        alt: filename.replace(/\.(pdf|jpg|jpeg|png|webp)$/i, ''),
-        isPdf: /\.pdf$/i.test(filename)
-    }), []);
+    const featured = useMemo(() => CERTIFICATES.slice(0, 6), []);
 
     useEffect(() => {
-        // Randomly pick 6 unique items from the pool
-        const shuffled = [...CERTIFICATE_POOL].sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 6).map(createCertItem);
-        setRandomCertificates(selected);
-    }, [createCertItem]);
-
-
-    const getPositions = useCallback((): Positions => {
-        const vw = typeof window !== "undefined" ? window.innerWidth : 1920;
-        const vh = typeof window !== "undefined" ? window.innerHeight : 1080;
-        const isCurrentlyMobile = vw < 768;
-
-        // ... (Desktop positions)
-        const desktopInitial: Record<string, Position> = {
-            cert1: { top: vh * 0.15, left: vw * 0.05, width: vw * 0.22, height: vh * 0.22, borderRadius: 12, zIndex: 1 },
-            cert2: { top: vh * 0.12, left: vw * 0.38, width: vw * 0.2, height: vh * 0.2, borderRadius: 12, zIndex: 1 },
-            cert3: { top: vh * 0.18, left: vw * 0.72, width: vw * 0.22, height: vh * 0.22, borderRadius: 12, zIndex: 1 },
-            cert4: { top: vh * 0.70, left: vw * 0.08, width: vw * 0.2, height: vh * 0.25, borderRadius: 12, zIndex: 1 },
-            cert5: { top: vh * 0.75, left: vw * 0.42, width: vw * 0.2, height: vh * 0.18, borderRadius: 12, zIndex: 1 },
-            cert6: { top: vh * 0.65, left: vw * 0.75, width: vw * 0.18, height: vh * 0.25, borderRadius: 12, zIndex: 1 },
-        };
-
-        // Mobile Grid Calculations (Pre-calculated for initial state to match final sizes and avoid layout thrashing)
-        const mGap = 10;
-        const mGridW = vw * 0.9;
-        const mColW = (mGridW - mGap) / 2;
-        const fixedHeight = 160;
-
-        const mobileInitial: Record<string, Position> = {
-            cert1: { top: vh * 0.15, left: vw * 0.05, width: mColW, height: fixedHeight, borderRadius: 8, zIndex: 1 },
-            cert2: { top: vh * 0.12, left: vw * 0.52, width: mColW, height: fixedHeight, borderRadius: 8, zIndex: 1 },
-            cert3: { top: vh * 0.35, left: vw * 0.08, width: mColW, height: fixedHeight, borderRadius: 8, zIndex: 1 },
-            cert4: { top: vh * 0.60, left: vw * 0.10, width: mColW, height: fixedHeight, borderRadius: 8, zIndex: 1 },
-            cert5: { top: vh * 0.65, left: vw * 0.55, width: mColW, height: fixedHeight, borderRadius: 8, zIndex: 1 },
-            cert6: { top: vh * 0.40, left: vw * 0.50, width: mColW, height: fixedHeight, borderRadius: 8, zIndex: 1 },
-        };
-
-        const initial = isCurrentlyMobile ? mobileInitial : desktopInitial;
-
-        const gridW = Math.min(vw * 0.85, 1400);
-        const gridH = vh * 0.7;
-        const startX = (vw - gridW) / 2;
-        const startY = (vh - gridH) / 2 + (vh * 0.05);
-        const gap = 16;
-        const col1W = (gridW - 2 * gap) * 0.4;
-        const col2W = (gridW - 2 * gap) * 0.3;
-        const col3W = (gridW - 2 * gap) * 0.3;
-
-        const desktopFinal: Record<string, Position> = {
-            cert1: { top: startY, left: startX, width: col1W, height: (gridH - gap) * 0.55, borderRadius: 8, zIndex: 10 },
-            cert2: { top: startY + (gridH - gap) * 0.55 + gap, left: startX, width: col1W, height: (gridH - gap) * 0.45, borderRadius: 8, zIndex: 10 },
-            cert3: { top: startY, left: startX + col1W + gap, width: col2W, height: (gridH - gap) * 0.4, borderRadius: 8, zIndex: 10 },
-            cert4: { top: startY + (gridH - gap) * 0.4 + gap, left: startX + col1W + gap, width: col2W, height: (gridH - gap) * 0.6, borderRadius: 8, zIndex: 10 },
-            cert5: { top: startY, left: startX + col1W + col2W + 2 * gap, width: col3W, height: (gridH - gap) * 0.65, borderRadius: 8, zIndex: 10 },
-            cert6: { top: startY + (gridH - gap) * 0.65 + gap, left: startX + col1W + col2W + 2 * gap, width: col3W, height: (gridH - gap) * 0.35, borderRadius: 8, zIndex: 10 },
-        };
-
-        const mStartX = (vw - mGridW) / 2;
-        const mStartY = vh * 0.2;
-
-        const mobileFinal: Record<string, Position> = {
-            cert1: { top: mStartY, left: mStartX, width: mColW, height: 160, borderRadius: 8, zIndex: 10 },
-            cert2: { top: mStartY, left: mStartX + mColW + mGap, width: mColW, height: 160, borderRadius: 8, zIndex: 10 },
-            cert3: { top: mStartY + 170, left: mStartX, width: mColW, height: 160, borderRadius: 8, zIndex: 10 },
-            cert4: { top: mStartY + 170, left: mStartX + mColW + mGap, width: mColW, height: 160, borderRadius: 8, zIndex: 10 },
-            cert5: { top: mStartY + 340, left: mStartX, width: mColW, height: 160, borderRadius: 8, zIndex: 10 },
-            cert6: { top: mStartY + 340, left: mStartX + mColW + mGap, width: mColW, height: 160, borderRadius: 8, zIndex: 10 },
-        };
-
-        const final = isCurrentlyMobile ? mobileFinal : desktopFinal;
-
-        return { initial, final };
-    }, []);
-
-    useEffect(() => {
-        if (typeof window === "undefined" || randomCertificates.length === 0) return;
-
         gsap.registerPlugin(ScrollTrigger);
+        if (!spacerRef.current || !fixedRef.current || !contentRef.current || !cardsRef.current) return;
 
-        const { initial, final } = getPositions();
-        const imageElements = imageRefs.current.filter((el): el is HTMLDivElement => el !== null);
-
+        const cards = Array.from(cardsRef.current.children);
         const ctx = gsap.context(() => {
-            imageElements.forEach((img, index) => {
-                const pos = initial[`cert${index + 1}`];
-                if (pos) {
-                    gsap.set(img, {
-                        top: pos.top,
-                        left: pos.left,
-                        width: pos.width,
-                        height: pos.height,
-                        borderRadius: pos.borderRadius,
-                        zIndex: pos.zIndex,
-                        scale: 0.8,
-                        rotate: index % 2 === 0 ? -5 : 5,
-                        opacity: 0,
-                    });
-                }
-            });
-
-            gsap.to(imageElements, {
-                opacity: 0.8,
+            gsap.set(cards, { opacity: 0, scale: 0.82, y: 35 });
+            gsap.to(cards, {
+                opacity: 1,
                 scale: 1,
-                duration: isLowPowerMode ? 0.6 : 1.2,
-                stagger: isLowPowerMode ? 0.05 : 0.1,
+                y: 0,
+                duration: isLowPowerMode ? 0.5 : 0.9,
+                stagger: isLowPowerMode ? 0.04 : 0.08,
                 ease: "power2.out",
             });
 
-            const mainTL = gsap.timeline({
+            const timeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: spacerRef.current,
                     start: "top top",
                     end: "bottom bottom",
-                    scrub: isLowPowerMode ? 0.2 : 0.5, // Faster responding scrub
+                    scrub: isLowPowerMode ? 0.15 : 0.45,
                 },
             });
 
-            if (heroContentRef.current) {
-                mainTL.to(heroContentRef.current, { autoAlpha: 0, scale: 0.9, duration: 0.2 }, 0);
-            }
-
-            imageElements.forEach((img, index) => {
-                const finalPos = final[`cert${index + 1}`];
-                const initialPos = initial[`cert${index + 1}`];
-
-                if (finalPos && initialPos) {
-                    mainTL.fromTo(
-                        img,
-                        {
-                            top: initialPos.top,
-                            left: initialPos.left,
-                            width: initialPos.width,
-                            height: initialPos.height,
-                            borderRadius: initialPos.borderRadius,
-                            rotate: index % 2 === 0 ? -5 : 5,
-                            opacity: 0.8,
-                            scale: 1,
-                            zIndex: initialPos.zIndex,
-                        },
-                        {
-                            top: finalPos.top,
-                            left: finalPos.left,
-                            width: finalPos.width,
-                            height: finalPos.height,
-                            borderRadius: finalPos.borderRadius,
-                            opacity: 1,
-                            rotate: 0,
-                            scale: 1,
-                            zIndex: finalPos.zIndex,
-                            duration: 1,
-                            ease: "power2.inOut",
-                            immediateRender: false
-                        },
-                        0
-                    );
-                }
-            });
-
-
-            // Add a buffer/pause at the end of the timeline
-            // This ensures the animation finishes BEFORE the user scrolls past the spacer,
-            // allowing them to see the final grid layout for a moment.
-            // Timeline Total Duration becomes ~2.0 (1.0 for animation + 1.0 buffer)
-            // So the animation completes at 1/2.0 = 50% of the scroll distance.
-            mainTL.to({}, { duration: 1.0 });
-
+            timeline.to(contentRef.current, { autoAlpha: 0, scale: 0.9, duration: 0.18 }, 0);
+            timeline.to(cards, {
+                y: (index) => index % 2 === 0 ? -25 : 25,
+                rotate: (index) => index % 2 === 0 ? -2 : 2,
+                duration: 0.8,
+                stagger: 0,
+                ease: "power2.inOut",
+            }, 0);
+            timeline.to({}, { duration: 1 });
         }, spacerRef);
 
-        // FADE OUT HERO when scrolling past the component
-        ScrollTrigger.create({
+        const fadeTrigger = ScrollTrigger.create({
             trigger: spacerRef.current,
-            start: "bottom top", // when bottom of spacer hits top of viewport
-            onEnter: () => {
-                if (fixedContainerRef.current) gsap.to(fixedContainerRef.current, { autoAlpha: 0, duration: 0.5 });
-            },
-            onLeaveBack: () => {
-                if (fixedContainerRef.current) gsap.to(fixedContainerRef.current, { autoAlpha: 1, duration: 0.5 });
-            },
-            toggleActions: "play none none reverse"
+            start: "bottom top",
+            onEnter: () => gsap.to(fixedRef.current, { autoAlpha: 0, duration: 0.4 }),
+            onLeaveBack: () => gsap.to(fixedRef.current, { autoAlpha: 1, duration: 0.4 }),
         });
 
-        return () => ctx.revert();
-    }, [getPositions, randomCertificates, isLowPowerMode]);
+        return () => {
+            ctx.revert();
+            fadeTrigger.kill();
+        };
+    }, [isLowPowerMode]);
 
     return (
         <>
-            {/* SPACER: Takes up space in the document flow to allow scrolling */}
-            <div ref={spacerRef} className="h-[350vh] w-full relative z-10 pointer-events-none" />
+            <div ref={spacerRef} className="h-[300vh] w-full relative z-10 pointer-events-none" />
 
-            {/* FIXED HERO: Stays behind content. z-10 ensures it sits ABOVE particles (z-0), but transparent to see them. */}
-            <div ref={fixedContainerRef} className="fixed inset-0 z-10 h-screen w-full overflow-hidden bg-transparent pointer-events-none">
-                {/* Background Effects */}
+            <div ref={fixedRef} className="fixed inset-0 z-10 h-screen w-full overflow-hidden bg-transparent pointer-events-none">
                 <div className="absolute inset-0 opacity-20 pointer-events-none">
-                    <div className="absolute top-[20%] right-[10%] w-[600px] h-[600px] bg-primary/10 blur-[80px] rounded-full" />
-                    <div className="absolute bottom-[10%] left-[5%] w-[500px] h-[500px] bg-secondary/10 blur-[80px] rounded-full" />
+                    <div className="absolute top-[15%] right-[8%] w-[520px] h-[520px] bg-primary/10 blur-[100px] rounded-full" />
+                    <div className="absolute bottom-[5%] left-[5%] w-[420px] h-[420px] bg-secondary/10 blur-[100px] rounded-full" />
                 </div>
 
-                {/* Content */}
-                <div
-                    ref={heroContentRef}
-                    className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-50 pt-10 pb-32"
-                >
-                    <div className="inline-block px-4 py-1.5 rounded-full bg-secondary/50 backdrop-blur-md border border-border/50 text-xs font-medium mb-6 animate-fade-in-up">
+                <div ref={contentRef} className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-50 pt-10 pb-32">
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary/50 backdrop-blur-md border border-border/50 text-xs font-medium mb-6">
                         Professional Milestones
                     </div>
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50 animate-fade-in-up delay-100">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50">
                         Certificates<br />& Awards
                     </h1>
-                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10 animate-fade-in-up delay-200">
-                        A visual journey through certifications and achievements.
+                    <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
+                        Explore the certifications, training credentials, and professional milestones.
                     </p>
                     <button
-                        onClick={() => window.scrollTo({ top: window.innerHeight * 1.2, behavior: 'smooth' })}
-                        className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all group animate-fade-in-up delay-300 pointer-events-auto"
+                        onClick={() => window.scrollTo({ top: window.innerHeight * 1.1, behavior: "smooth" })}
+                        className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all group pointer-events-auto"
                     >
                         <span>Scroll to Explore</span>
                         <ChevronDown className="w-4 h-4 animate-bounce" />
                     </button>
                 </div>
 
-                {/* Images */}
-                {randomCertificates.map((cert, index) => (
-                    <div
-                        key={`${cert.id}-${index}`}
-                        ref={(el) => {
-                            imageRefs.current[index] = el;
-                        }}
-                        className="absolute w-[10px] h-[10px] opacity-0 overflow-hidden shadow-2xl border border-border/20 bg-card rounded-lg"
-                        style={{
-                            willChange: "transform, opacity", // Optimized will-change
-                            zIndex: 1 // Base z-index
-                        }}
-                    >
-                        {cert.isPdf ? (
-                            <div className="relative w-full h-full bg-white">
-                                <iframe
-                                    src={`${cert.src}#toolbar=0&navpanes=0&scrollbar=0&view=Fit`}
-                                    className="w-full h-full object-cover opacity-90 pointer-events-none"
-                                    title={cert.alt}
+                <div ref={cardsRef} className="absolute inset-0 pointer-events-none">
+                    {featured.map((certificate, index) => (
+                        <div
+                            key={certificate.pdf}
+                            className="absolute pointer-events-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/80 backdrop-blur-md group"
+                            style={{
+                                top: index < 3 ? "15%" : "61%",
+                                left: index % 3 === 0 ? "5%" : index % 3 === 1 ? "39%" : "72%",
+                                width: index % 3 === 1 ? "20%" : "22%",
+                                height: index % 3 === 1 ? "22%" : "24%",
+                            }}
+                            onMouseEnter={() => setActiveCertificate(index)}
+                        >
+                            <a
+                                href={encodePath(certificate.pdf)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block w-full h-full"
+                                aria-label={`Open ${certificate.name} certificate PDF`}
+                            >
+                                <img
+                                    src={encodePath(certificate.image)}
+                                    alt={certificate.name}
+                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     loading="lazy"
                                 />
-                                {/* Overlay to ensure no interaction */}
-                                <div className="absolute inset-0 bg-transparent z-10" />
-                            </div>
-                        ) : (
-                            <>
-                                <Image
-                                    src={cert.src}
-                                    alt={cert.alt}
-                                    fill
-                                    priority={index < 2} // Priority loading for first few
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    className="object-cover opacity-90 hover:opacity-100 transition-opacity"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60 pointer-events-none" />
-                            </>
-                        )}
-                    </div>
-                ))}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-transparent" />
+                                <div className="absolute left-4 right-4 bottom-4">
+                                    <div className="flex items-end justify-between gap-3">
+                                        <span className="text-xs md:text-sm font-bold text-white leading-tight drop-shadow-lg line-clamp-2">
+                                            {certificate.name}
+                                        </span>
+                                        <ExternalLink className="w-4 h-4 text-white/80 shrink-0" />
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-[60] hidden md:flex items-center gap-2 pointer-events-auto">
+                    {featured.map((certificate, index) => (
+                        <a
+                            key={certificate.pdf}
+                            href={encodePath(certificate.pdf)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={certificate.name}
+                            onMouseEnter={() => setActiveCertificate(index)}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${activeCertificate === index ? "w-10 bg-foreground" : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"}`}
+                        />
+                    ))}
+                </div>
             </div>
         </>
     );
