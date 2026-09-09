@@ -3,21 +3,93 @@
 import { motion, MotionValue, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 const certificates = [
-  "/certificate/Data Analytics on Google Cloud.webp",
-  "/certificate/Deep Learning Beginner.webp",
-  "/certificate/Docker, Kubernetes dan DevOps.webp",
-  "/certificate/Fullstack Programming Untuk Pemula.webp",
-  "/certificate/Introduction to Generative AI.webp",
-  "/certificate/Machine Learning Foundations.webp",
-  "/certificate/Mastering Smart Contract.webp",
-  "/certificate/Started with Databases.webp",
-  "/certificate/Supervised Machine Learning Regression and Classification.webp",
-  "/certificate/elevAIte with Dicoding Program 2025.webp",
+  {
+    title: "AI Infrastructure and Operations Fundamentals",
+    image: "/Certificate/AI Infrastructure and Operations Fundamentals.png",
+    pdf: "/Certificate/AI Infrastructure and Operations Fundamentals.pdf",
+  },
+  {
+    title: "AI and Machine Learning Algorithms and Techniques",
+    image: "/Certificate/AI and Machine Learning Algorithms and Techniques.png",
+    pdf: "/Certificate/AI and Machine Learning Algorithms and Techniques.pdf",
+  },
+  {
+    title: "Accelerate Your Job Search with AI",
+    image: "/Certificate/Accelerate Your Job Search with AI.png",
+    pdf: "/Certificate/Accelerate Your Job Search with AI.pdf",
+  },
+  {
+    title: "Advanced Ethical Hacking & Cybersecurity",
+    image: "/Certificate/Advanced Ethical Hacking & Cybersecurity.png",
+    pdf: "/Certificate/Advanced Ethical Hacking & Cybersecurity.pdf",
+  },
+  {
+    title: "Website Design and Development Internship",
+    image: "/Certificate/Arham Topiwala - Website Design and Development Internship - Internship.png",
+    pdf: "/Certificate/Arham Topiwala - Website Design and Development Internship - Internship.pdf",
+  },
+  {
+    title: "Chatbots",
+    image: "/Certificate/Chatbots.png",
+    pdf: "/Certificate/Chatbots.pdf",
+  },
+  {
+    title: "Create Interactive Dashboards with Streamlit and Python",
+    image: "/Certificate/Create Interactive Dashboards with Streamlit and Python.png",
+    pdf: "/Certificate/Create Interactive Dashboards with Streamlit and Python.pdf",
+  },
+  {
+    title: "Ethical Hacking Specialization",
+    image: "/Certificate/Ethical Hacking Specialization.png",
+    pdf: "/Certificate/Ethical Hacking Specialization.pdf",
+  },
+  {
+    title: "Fast Prototyping of GenAI Apps with Streamlit",
+    image: "/Certificate/Fast Prototyping of GenAI Apps with Streamlit.png",
+    pdf: "/Certificate/Fast Prototyping of GenAI Apps with Streamlit.pdf",
+  },
+  {
+    title: "Game Developers and Esports Organizations",
+    image: "/Certificate/Game Developers and Esports Organizations.png",
+    pdf: "/Certificate/Game Developers and Esports Organizations.pdf",
+  },
+  {
+    title: "IBM Generative AI for Cybersecurity Professionals",
+    image: "/Certificate/IBM Generative AI for Cybersecurity Professionals.png",
+    pdf: "/Certificate/IBM Generative AI for Cybersecurity Professionals.pdf",
+  },
+  {
+    title: "Introduction to Networking",
+    image: "/Certificate/Introduction to Networking.png",
+    pdf: "/Certificate/Introduction to Networking.pdf",
+  },
+  {
+    title: "Oracle Cloud and AI",
+    image: "/Certificate/Oracle Cloud and AI.png",
+    pdf: "/Certificate/Oracle Cloud and AI.pdf",
+  },
+  {
+    title: "System & Network Security Essentials",
+    image: "/Certificate/System & Network Security Essentials.png",
+    pdf: "/Certificate/System & Network Security Essentials.pdf",
+  },
+  {
+    title: "JavaScript Intermediate Certificate",
+    image: "/Certificate/javascript_intermediate certificate.png",
+    pdf: "/Certificate/javascript_intermediate certificate.pdf",
+  },
+  {
+    title: "Software Engineer Certificate",
+    image: "/Certificate/software_engineer certificate.png",
+    pdf: "/Certificate/software_engineer certificate.pdf",
+  },
 ];
+
+const encodePath = (path: string) => encodeURI(path);
 
 function ScrambleButton({ href }: { href: string }) {
   const [displayText, setDisplayText] = useState("View All Achievements");
@@ -28,18 +100,16 @@ function ScrambleButton({ href }: { href: string }) {
   const scramble = () => {
     if (isScrambling) return;
     setIsScrambling(true);
-    
+
     let iteration = 0;
     const maxIterations = originalText.length;
 
     const interval = setInterval(() => {
-      setDisplayText((prev) =>
+      setDisplayText(
         originalText
           .split("")
           .map((letter, index) => {
-            if (index < iteration) {
-              return originalText[index];
-            }
+            if (index < iteration) return originalText[index];
             return chars[Math.floor(Math.random() * chars.length)];
           })
           .join("")
@@ -68,8 +138,37 @@ function ScrambleButton({ href }: { href: string }) {
 }
 
 type ColumnProps = {
-  images: string[];
+  images: typeof certificates;
   y: MotionValue<number>;
+};
+
+const CertificateCard = ({ certificate }: { certificate: (typeof certificates)[number] }) => {
+  return (
+    <div className="relative w-full overflow-hidden rounded-none bg-zinc-100 dark:bg-zinc-900 ring-1 ring-black/5 dark:ring-white/10 group" style={{ paddingTop: "75%" }}>
+      <a
+        href={encodePath(certificate.pdf)}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${certificate.title} certificate`}
+        className="absolute inset-0 block"
+      >
+        <Image
+          src={encodePath(certificate.image)}
+          alt={certificate.title}
+          fill
+          sizes="(max-width: 1024px) 50vw, 33vw"
+          className="pointer-events-none object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-2 p-4">
+          <span className="text-sm font-semibold leading-tight text-white drop-shadow-lg">
+            {certificate.title}
+          </span>
+          <ExternalLink className="h-4 w-4 shrink-0 text-white/90" />
+        </div>
+      </a>
+    </div>
+  );
 };
 
 const Column = ({ images, y }: ColumnProps) => {
@@ -78,16 +177,8 @@ const Column = ({ images, y }: ColumnProps) => {
       className="relative -top-[45%] flex h-full w-1/3 min-w-[250px] flex-col gap-4 md:gap-6 first:top-[-45%] [&:nth-child(2)]:top-[-95%] [&:nth-child(3)]:top-[-65%] will-change-transform"
       style={{ y, translateZ: 0 }}
     >
-      {images.map((src, i) => (
-        <div key={i} className="relative w-full overflow-hidden rounded-none bg-zinc-100 dark:bg-zinc-900 ring-1 ring-black/5 dark:ring-white/10" style={{ paddingTop: '75%' }}>
-          <Image
-            src={src}
-            alt={`Certificate ${i}`}
-            fill
-            sizes="(max-width: 1024px) 50vw, 33vw"
-            className="pointer-events-none object-cover"
-          />
-        </div>
+      {images.map((certificate) => (
+        <CertificateCard key={certificate.pdf} certificate={certificate} />
       ))}
     </motion.div>
   );
@@ -102,13 +193,11 @@ export function CertificateShowcase() {
     offset: ["start end", "end start"],
   });
 
-  // Extremely soft spring to act as a low-pass filter. 
-  // This absorbs ALL micro-vibrations and judders from Framer Motion's scroll calculations.
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 20,
     damping: 15,
     mass: 0.2,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   const { height } = dimension;
@@ -124,16 +213,13 @@ export function CertificateShowcase() {
     window.addEventListener("resize", resize);
     resize();
 
-    return () => {
-      window.removeEventListener("resize", resize);
-    };
+    return () => window.removeEventListener("resize", resize);
   }, []);
 
   return (
     <section className="relative w-full bg-background overflow-hidden pb-32">
-      {/* Intro Text Section */}
       <div className="container mx-auto px-4 md:px-12 lg:px-24 relative z-10 max-w-[1750px] mb-20 pt-20">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -153,27 +239,24 @@ export function CertificateShowcase() {
               </p>
             </div>
           </div>
-          
+
           <div className="flex justify-center mt-4">
             <ScrambleButton href="/achievements" />
           </div>
         </motion.div>
       </div>
 
-      {/* Parallax Gallery - Reduced to 3 columns with margins on sides */}
       <div className="w-full max-w-[1800px] mx-auto px-4 md:px-8 lg:px-12">
         <div
           ref={gallery}
           className="relative box-border flex h-[100vh] md:h-[130vh] gap-4 md:gap-6 overflow-hidden rounded-none"
         >
-          {/* Fill each column with more images so they don't run out during the scroll */}
           <Column images={[certificates[0], certificates[1], certificates[2], certificates[3], certificates[4], certificates[5]]} y={y} />
           <Column images={[certificates[5], certificates[6], certificates[7], certificates[8], certificates[9], certificates[0]]} y={y2} />
           <Column images={[certificates[9], certificates[8], certificates[7], certificates[6], certificates[5], certificates[4]]} y={y3} />
         </div>
       </div>
-      
-      {/* Background Decorative Elements */}
+
       <div className="absolute top-[20%] left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
       <div className="absolute bottom-[10%] right-1/4 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
     </section>
