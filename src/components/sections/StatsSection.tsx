@@ -14,7 +14,6 @@ const CATEGORY_COLORS: Record<string, string> = {
     'more': '#FED954', // Yellow
 };
 
-
 export default function StatsSection({ scrollYProgress, showOnly }: { scrollYProgress?: any, showOnly?: 'top' | 'bottom' }) {
     const [images, setImages] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -26,25 +25,17 @@ export default function StatsSection({ scrollYProgress, showOnly }: { scrollYPro
 
     useEffect(() => {
         const galleryImages = [
-            { src: '/gallery/Foto Utama.webp', alt: 'Foto Utama' },
-            { src: '/gallery/FotoSC1.webp', alt: 'Foto SC1' },
-            { src: '/gallery/FotoSC2.webp', alt: 'Foto SC2' },
-            { src: '/gallery/FotoSC3.webp', alt: 'Foto SC3' },
-            { src: '/gallery/FotoSC4.webp', alt: 'Foto SC4' },
-            { src: '/gallery/FotoSC5.webp', alt: 'Foto SC5' },
-            { src: '/gallery/academicaffairsdivision1.webp', alt: 'Academic Affairs' },
-            { src: '/gallery/computernetworkpracticumassistant2.webp', alt: 'Computer Network' },
-            { src: '/gallery/dataentryassistant1.webp', alt: 'Data Entry' },
-            { src: '/gallery/delegateaiesecfutureleaders20241.webp', alt: 'AIESEC' },
-            { src: '/gallery/environmentalhygieneteam1.webp', alt: 'Hygiene Team 1' },
-            { src: '/gallery/environmentalhygieneteam2.webp', alt: 'Hygiene Team 2' },
-            { src: '/gallery/logisticsoperatorcampusexpo20242.webp', alt: 'Logistics' },
-            { src: '/gallery/researchassistant1.webp', alt: 'Research Assistant 1' },
-            { src: '/gallery/researchassistant2.webp', alt: 'Research Assistant 2' },
+            { src: '/gallery/new-photo-1.jpeg', alt: 'Professional Portrait' },
+            { src: '/gallery/new-photo-2.jpeg', alt: 'Poster Presentation — Unveiling the Dark Web' },
+            { src: '/gallery/new-photo-3.jpeg', alt: 'LJ Innovation Village 2026 — Phisgaurd AI Project Showcase' },
+            { src: '/gallery/new-photo-4.jpeg', alt: 'LJ Innovation Village 2026 — Phisgaurd AI Demonstration' },
+            { src: '/gallery/new-photo-5.jpeg', alt: 'LJ Innovation Village 2026 — Team' },
+            { src: '/gallery/new-photo-6.jpeg', alt: 'LJ Innovation Village 2026' },
+            { src: '/gallery/new-photo-7.jpeg', alt: 'LJ Innovation Village 2026 — Showcase' },
         ];
-        // Shuffle images randomly
-        const shuffledImages = [...galleryImages].sort(() => 0.5 - Math.random());
-        setImages(shuffledImages);
+
+        // Keep the professional photos in a consistent order so each image has a clear context.
+        setImages(galleryImages);
         setLoading(false);
     }, []);
 
@@ -58,7 +49,6 @@ export default function StatsSection({ scrollYProgress, showOnly }: { scrollYPro
         setCurrentIndex((prev) => (prev - 1 + blogs.length) % blogs.length);
     };
 
-    // Helper to get visible blogs in an infinite way
     const getVisibleBlogs = () => {
         const result = [];
         for (let i = 0; i < visibleCount; i++) {
@@ -75,7 +65,6 @@ export default function StatsSection({ scrollYProgress, showOnly }: { scrollYPro
 
     return (
         <section className="relative z-20 bg-background overflow-visible flex flex-col items-center transition-colors duration-500">
-            {/* Header for the Gallery Section */}
             {(showOnly === 'top' || !showOnly) && (
                 <>
                     <div className="max-w-6xl mx-auto px-6 w-full pt-32 pb-16 text-center space-y-4">
@@ -98,7 +87,6 @@ export default function StatsSection({ scrollYProgress, showOnly }: { scrollYPro
                         </motion.p>
                     </div>
 
-                    {/* Immersive Zoom Parallax Component */}
                     <div className="w-full">
                         <ZoomParallax images={images}>
                             <Link 
@@ -113,7 +101,6 @@ export default function StatsSection({ scrollYProgress, showOnly }: { scrollYPro
                 </>
             )}
 
-            {/* Book Showcase Integration */}
             {(showOnly === 'bottom' || !showOnly) && (
                 <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-16 pb-32 space-y-16 relative">
                     <div className="flex items-center justify-between border-b border-border/50 pb-8">
@@ -130,7 +117,6 @@ export default function StatsSection({ scrollYProgress, showOnly }: { scrollYPro
                     </div>
 
                     <div className="relative group/slider flex items-center justify-center">
-                        {/* Navigation Buttons - Positioned relatively to the container */}
                         <div className="absolute left-0 top-[35%] -translate-y-1/2 z-30 hidden lg:block">
                             <button
                                 onClick={prevSlide}
@@ -149,7 +135,6 @@ export default function StatsSection({ scrollYProgress, showOnly }: { scrollYPro
                             </button>
                         </div>
 
-                        {/* Mobile Navigation */}
                         <div className="absolute inset-x-0 top-[35%] -translate-y-1/2 z-30 flex justify-between px-2 lg:hidden">
                             <button
                                 onClick={prevSlide}
@@ -183,7 +168,6 @@ export default function StatsSection({ scrollYProgress, showOnly }: { scrollYPro
                                             className="group relative w-[200px] md:w-[260px] flex-shrink-0"
                                         >
                                             <Link href={`/blog/${blog.slug}`} className="block relative z-10 group/book">
-                                                {/* Glow Effect - Inside Link for better hover detection */}
                                                 <div
                                                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] aspect-square -z-10 blur-[80px] opacity-0 group-hover/book:opacity-70 group-hover/book:scale-110 transition-all duration-700 rounded-full pointer-events-none"
                                                     style={{
