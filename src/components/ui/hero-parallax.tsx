@@ -138,6 +138,23 @@ export const ProductCard = ({
   translate: MotionValue<number>;
   isLowPowerMode?: boolean;
 }) => {
+  const title = product.title.toLowerCase();
+  const projectArtwork = title.includes('glassmorphism')
+    ? '/project/parallax/glassmorphism-portfolio.svg'
+    : title.includes('langsphere')
+      ? '/project/parallax/langsphere.svg'
+      : title.includes('phisguard')
+        ? '/project/parallax/phisguard.svg'
+        : title.includes('stockeasy')
+          ? '/project/parallax/stockeasy.svg'
+          : title.includes('habit tracker')
+            ? '/project/parallax/habit-tracker.svg'
+            : title.includes('flipkart')
+              ? '/project/parallax/flipkart-clone.svg'
+              : title.includes('domain management')
+                ? '/project/parallax/domain-management.svg'
+                : product.thumbnail;
+
   return (
     <motion.div
       style={{
@@ -157,7 +174,7 @@ export const ProductCard = ({
         className="block group-hover/product:shadow-2xl "
       >
         <Image
-          src={product.thumbnail}
+          src={projectArtwork}
           height={600}
           width={600}
           className="object-cover object-left-top absolute h-full w-full inset-0"
