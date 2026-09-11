@@ -37,6 +37,14 @@ const GALLERY_DETAILS: Record<string, { title: string; description: string }> = 
         title: 'LJ Innovation Village 2026 — Showcase',
         description: 'Team photo during the LJ Innovation Village 2026 innovation showcase.',
     },
+    'learning-day-award.jpg': {
+        title: 'Coursera Learning Day Celebration',
+        description: 'Receiving recognition during the Coursera Learning Day Celebration at LJ University.',
+    },
+    'learning-day-group.jpg': {
+        title: 'Coursera Learning Day — Recognition Ceremony',
+        description: 'Group recognition ceremony at LJ University during the Coursera Learning Day Celebration.',
+    },
 };
 
 export async function getAllGalleryImages(): Promise<GalleryImage[]> {
@@ -59,6 +67,8 @@ export async function getAllGalleryImages(): Promise<GalleryImage[]> {
             'new-photo-5.jpeg',
             'new-photo-6.jpeg',
             'new-photo-7.jpeg',
+            'learning-day-award.jpg',
+            'learning-day-group.jpg',
         ];
 
         return newGalleryFiles
