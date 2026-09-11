@@ -16,44 +16,44 @@ interface ProjectData {
 
 const PROJECT_DATA: ProjectData[] = [
   {
-    title: "Browser Automation Agent",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop&fm=webp",
-    category: "AI & Automation",
+    title: "LangSphere",
+    image: "/project/parallax/langsphere.svg",
+    category: "Android & AI",
+    year: "2025",
+    description: "AI-powered language learning app with conversational practice, gamification and offline learning.",
+    slug: "langsphere"
+  },
+  {
+    title: "PhisGaurd",
+    image: "/project/parallax/phisguard.svg",
+    category: "Cybersecurity & AI",
     year: "2026",
-    description: "AI-driven browser interaction & testing engine.",
-    slug: "browser-automation-agent"
+    description: "AI-powered phishing detection platform combining threat intelligence with machine learning risk analysis.",
+    slug: "phisguard"
   },
   {
-    title: "Swarm AI Blog Writer",
-    image: "/project/swarmaiblogwriter1.webp",
-    category: "AI & Content",
+    title: "StockEasy",
+    image: "/project/parallax/stockeasy.svg",
+    category: "FinTech & Data",
     year: "2025",
-    description: "Multi-agent orchestration for research-backed content.",
-    slug: "swarm-ai-blog-writer"
+    description: "Online stock exchange platform with real-time market data, trading, portfolios, watchlists and IPO management.",
+    slug: "stockeasy"
   },
   {
-    title: "Creative Portfolio Website",
-    image: "/project/creativeportfoliowebsite1.webp",
-    category: "Creative Tech",
-    year: "2025",
-    description: "Immersive 3D portfolio with WebGL shaders.",
-    slug: "creative-portfolio-website"
+    title: "Flipkart Clone",
+    image: "/project/parallax/flipkart-clone.svg",
+    category: "E-commerce & Django",
+    year: "2024",
+    description: "Full-stack Django e-commerce platform with product catalog, cart, checkout, orders, wishlist and administration.",
+    slug: "flipkart-clone"
   },
   {
-    title: "SNBTIn Platform",
-    image: "/project/snbtinplatformpersiapansnbt20251.webp",
-    category: "EdTech",
-    year: "2025",
-    description: "Leading e-learning platform for SNBT preparation.",
-    slug: "snbtin-platform"
-  },
-  {
-    title: "Terraflow Platform",
-    image: "/project/terraflowplatform1.webp",
-    category: "IoT & Embedded",
-    year: "2025",
-    description: "Enterprise IoT solution for precision agriculture.",
-    slug: "terraflow-platform"
+    title: "Domain Management System",
+    image: "/project/parallax/domain-management.svg",
+    category: "Web Applications",
+    year: "2024",
+    description: "Structured domain management application for organizing domain records and administrative workflows.",
+    slug: "domain-management-system"
   },
 ];
 
@@ -354,7 +354,7 @@ export function ArgentLoopInfiniteSlider() {
                 <div className="flex items-center gap-4 pointer-events-auto">
                   <MagneticEffect>
                     <a 
-                      href="https://github.com/Arfazrll" 
+                      href="https://github.com/Arham43-ops" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="custom-btn-github hover:scale-110 active:scale-95 transition-transform shadow-xl block"
