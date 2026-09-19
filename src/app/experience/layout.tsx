@@ -1,14 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Experience',
-    description: 'My professional journey and educational background.',
+    title: 'Experience & Education',
+    description: 'Arham Topiwala\'s professional experience, education, engineering responsibilities, and technical background.',
+    alternates: { canonical: '/experience' },
 };
 
-export default function ExperienceLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export default function ExperienceLayout({ children }: { children: React.ReactNode }) {
     return children;
 }
