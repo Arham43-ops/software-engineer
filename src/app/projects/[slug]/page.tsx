@@ -59,6 +59,24 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         notFound();
     }
 
+    const projectSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareSourceCode',
+        '@id': `${siteUrl}/projects/${project.slug}#software`,
+        name: project.title,
+        description: project.description,
+        url: `${siteUrl}/projects/${project.slug}`,
+        codeRepository: project.repoUrl,
+        programmingLanguage: project.techStack,
+        author: {
+            '@type': 'Person',
+            name: 'Arham Topiwala',
+            url: siteUrl,
+        },
+        dateCreated: project.startDate,
+        applicationCategory: project.category,
+    };
+
     // Fetch dynamic images from public/project folder
     const galleryImages = await getProjectImages(slug, project.title);
 
@@ -69,5 +87,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         galleryImages: galleryImages.length > 0 ? galleryImages : project.galleryImages // All images for gallery
     };
 
-    return <ProjectPageContent project={updatedProject} />;
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+            />
+            <ProjectPageContent project={updatedProject} />
+        </>
+    );
 }
