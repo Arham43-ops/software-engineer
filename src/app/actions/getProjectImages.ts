@@ -1,56 +1,44 @@
 'use server';
 
-import fs from 'fs';
+import { readdir } from 'fs/promises';
 import path from 'path';
 
+let projectFilesPromise: Promise<Set<string>> | null = null;
+
+async function getProjectFiles(): Promise<Set<string>> {
+    if (!projectFilesPromise) {
+        const projectDir = path.join(process.cwd(), 'public', 'project');
+        projectFilesPromise = readdir(projectDir)
+            .then((files) => new Set(files))
+            .catch(() => new Set<string>());
+    }
+
+    return projectFilesPromise;
+}
+
 export async function getProjectImages(slug: string, title?: string): Promise<string[]> {
-    const publicDir = path.join(process.cwd(), 'public');
-    const projectDir = path.join(publicDir, 'project'); // Folder: public/project
-    const validImages: string[] = [];
-
-    // Strategy 1: Slug-based (terraflow-platform -> terraflowplatform)
+    const files = await getProjectFiles();
     const sanitizedSlug = slug.replace(/-/g, '');
-
-    // Strategy 2: Title-based (SNBTIn - Platform... -> snbtinplatformpersiapansnbt2025)
-    // Remove all non-alphanumeric characters and lowercase
     const sanitizedTitle = title ? title.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
-
-    // We will check both strategies. If title matches user preference, it will be found.
-    // We prioritize Title if it exists, as per user request for SNBTIn.
     const searchBases = sanitizedTitle ? [sanitizedTitle, sanitizedSlug] : [sanitizedSlug];
-
-    // Remove duplicates if title and slug normalize to the same string
     const uniqueBases = [...new Set(searchBases)];
+    const validImages: string[] = [];
+    const extensions = ['webp', 'png', 'jpg', 'jpeg'];
 
     for (const baseName of uniqueBases) {
         if (!baseName) continue;
 
         for (let i = 1; i <= 10; i++) {
-            const extensions = ['webp', 'png', 'jpg', 'jpeg'];
-
             for (const ext of extensions) {
                 const filename = `${baseName}${i}.${ext}`;
-                const filePath = path.join(projectDir, filename);
 
-                try {
-                    if (fs.existsSync(filePath)) {
-                        // Avoid duplicates if we check multiple bases
-                        const imagePath = `/project/${filename}`;
-                        if (!validImages.includes(imagePath)) {
-                            validImages.push(imagePath);
-                        }
-                        break; // Stop checking extensions for this number
-                    }
-                } catch (error) {
-                    // Ignore errors
+                if (files.has(filename)) {
+                    validImages.push(`/project/${filename}`);
+                    break;
                 }
             }
         }
 
-        // If we found images with this base, we might stop? 
-        // Or should we merge? validImages will collect from both if they exist.
-        // Assuming user uses ONE convention per project. 
-        // If we found images, we can break the base loop to avoid mixing if they have both (unlikely).
         if (validImages.length > 0) break;
     }
 
