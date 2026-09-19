@@ -85,7 +85,6 @@ export default async function BlogPostLayout({
               },
               keywords: post.tags.join(', '),
               articleSection: post.category,
-              timeRequired: post.readTime,
           }
         : null;
 
