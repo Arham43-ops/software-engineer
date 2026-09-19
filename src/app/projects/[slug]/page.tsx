@@ -66,7 +66,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         name: project.title,
         description: project.description,
         url: `${siteUrl}/projects/${project.slug}`,
-        codeRepository: project.repoUrl,
         programmingLanguage: project.techStack,
         author: {
             '@type': 'Person',
@@ -74,7 +73,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             url: siteUrl,
         },
         dateCreated: project.startDate,
-        applicationCategory: project.category,
+        ...(project.repoUrl ? { codeRepository: project.repoUrl } : {}),
+        ...(project.category ? { applicationCategory: project.category } : {}),
     };
 
     // Fetch dynamic images from public/project folder
