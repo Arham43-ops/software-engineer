@@ -23,7 +23,7 @@ export async function generateMetadata(
     return {
         title: project.title,
         description: project.description,
-        keywords: [...project.techStack, project.category, 'software project', 'Full Stack development'],
+        keywords: [...project.techStack, ...(project.category ? [project.category] : []), 'software project', 'Full Stack development'],
         alternates: { canonical: url },
         openGraph: {
             type: 'website',
