@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import {
   ArrowDown,
-  BriefcaseBusiness,
+  Briefcase,
   FileText,
   Globe,
-  House,
+  Home,
   Linkedin,
   Mail,
   MapPin,
@@ -128,7 +128,7 @@ function FocusProfile() {
               <div className="mt-4 rounded-2xl border border-black/10 bg-white/75 p-4 shadow-sm backdrop-blur">
                 <div className="flex items-start gap-3">
                   <div className="rounded-xl bg-black p-2 text-white">
-                    <BriefcaseBusiness className="h-4 w-4" />
+                    <Briefcase className="h-4 w-4" />
                   </div>
                   <div>
                     <p className="font-semibold">
@@ -159,7 +159,7 @@ function FocusProfile() {
               aria-label="Home"
               className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-500 transition hover:bg-neutral-100 hover:text-black"
             >
-              <House className="h-5 w-5" />
+              <Home className="h-5 w-5" />
             </Link>
 
             <Link
@@ -185,7 +185,7 @@ function FocusProfile() {
               aria-label="Experience"
               className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-500 transition hover:bg-neutral-100 hover:text-black"
             >
-              <BriefcaseBusiness className="h-5 w-5" />
+              <Briefcase className="h-5 w-5" />
             </Link>
 
             <a
