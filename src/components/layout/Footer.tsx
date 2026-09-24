@@ -104,15 +104,15 @@ export function Footer() {
                 hour: 'numeric',
                 minute: '2-digit',
                 hour12: true,
-                timeZone: 'Asia/Jakarta'
+                timeZone: 'Asia/Kolkata'
             };
             const timeString = new Intl.DateTimeFormat('en-US', options).format(now);
-            // Jakarta is UTC+7
-            setLocalTime(`${timeString} UTC+7`);
+            // Ahmedabad uses India Standard Time (UTC+5:30).
+            setLocalTime(`${timeString} IST`);
         };
 
         updateTime();
-        const interval = setInterval(updateTime, 60000);
+        const interval = setInterval(updateTime, 1000);
         return () => clearInterval(interval);
     }, []);
 
@@ -376,9 +376,21 @@ export function Footer() {
                                                     )}
                                                 </AnimatePresence>
                                             </div>
-                                            <FooterLink href={portfolioData.personal.socialLinks.find(s => s.platform === 'LinkedIn')?.url || '#'} target="_blank">LinkedIn</FooterLink>
-                                            <FooterLink href={portfolioData.personal.socialLinks.find(s => s.platform === 'Instagram')?.url || '#'} target="_blank">Instagram</FooterLink>
-                                            <FooterLink href={portfolioData.personal.socialLinks.find(s => s.platform === 'GitHub')?.url || '#'} target="_blank">GitHub</FooterLink>
+                                            {[
+                                                { platform: 'LinkedIn', username: 'Arham43-ops' },
+                                                { platform: 'Instagram', username: 'arham.tsx' },
+                                                { platform: 'GitHub', username: 'Arham43-ops' },
+                                            ].map(({ platform, username }) => {
+                                                const social = portfolioData.personal.socialLinks.find(s => s.platform === platform);
+                                                return (
+                                                    <SocialHoverLink
+                                                        key={platform}
+                                                        label={platform}
+                                                        username={username}
+                                                        href={social?.url || '#'}
+                                                    />
+                                                );
+                                            })}
                                         </FooterColumn>
 
                                         <FooterColumn title={t('localTime')}>
@@ -421,6 +433,35 @@ export function Footer() {
                 document.body
             )}
         </>
+    );
+}
+
+
+function SocialHoverLink({ label, username, href }: { label: string; username: string; href: string }) {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <div
+            className="relative w-fit"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <FooterLink href={href} target="_blank">{label}</FooterLink>
+            <AnimatePresence>
+                {isHovered && (
+                    <motion.div
+                        initial={{ opacity: 0, x: 5 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 5 }}
+                        className="absolute left-full top-1/2 -translate-y-1/2 ml-[clamp(8px,1vw,16px)] whitespace-nowrap z-50 pointer-events-none"
+                    >
+                        <span className="text-[clamp(12px,1.1vw,18px)] font-medium text-zinc-400 dark:text-zinc-500 select-all">
+                            {username}
+                        </span>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     );
 }
 
