@@ -173,7 +173,7 @@
                     "title": "Android Habit Tracker",
                     "desc": "Kotlin habit-tracking app with streaks, progress analytics, reminders, flexible scheduling, and local persistence."
                 }
-            ,
+            ],
             "discoverMore": "Discover More"
         }
     },
