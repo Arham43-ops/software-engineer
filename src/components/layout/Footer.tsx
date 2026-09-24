@@ -421,7 +421,7 @@ export function Footer() {
                                         initial={{ opacity: 0, y: "100%" }}
                                         animate={isAboutExpanded ? { opacity: 0, y: "120%" } : { opacity: 1, y: "8%" }}
                                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                                        className="text-[18vw] font-black leading-none text-zinc-900 dark:text-white tracking-tighter select-none text-center"
+                                        className="text-[16vw] font-extrabold leading-[0.82] text-zinc-900 dark:text-white tracking-[-0.055em] select-none text-center font-sans"
                                     >
                                         ARHAM
                                     </motion.h2>
@@ -438,29 +438,12 @@ export function Footer() {
 
 
 function SocialHoverLink({ label, username, href }: { label: string; username: string; href: string }) {
-    const [isHovered, setIsHovered] = useState(false);
-
     return (
-        <div
-            className="relative w-fit"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
+        <div className="group grid grid-cols-[clamp(120px,8vw,150px)_1fr] items-center w-[clamp(280px,24vw,420px)]">
             <FooterLink href={href} target="_blank">{label}</FooterLink>
-            <AnimatePresence>
-                {isHovered && (
-                    <motion.div
-                        initial={{ opacity: 0, x: 5 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 5 }}
-                        className="absolute left-[clamp(120px,8vw,150px)] top-1/2 -translate-y-1/2 whitespace-nowrap z-50 pointer-events-none"
-                    >
-                        <span className="text-[clamp(12px,1.1vw,18px)] font-medium text-zinc-400 dark:text-zinc-500 select-all">
-                            {username}
-                        </span>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <span className="text-[clamp(12px,1.05vw,18px)] font-medium text-zinc-400 dark:text-zinc-500 whitespace-nowrap opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 select-all">
+                {username}
+            </span>
         </div>
     );
 }
