@@ -32,12 +32,12 @@ const NODES_DATA: Record<string, NodeData[]> = {
         { label: 'GDSC ML Path', description: 'Mastering regression, classification, and core ML.', orbitIndex: 1, position: 0.05, imageUrl: "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=400&auto=format&fit=crop&fm=webp" },
     ],
     journey: [
-        { label: 'Project Officer', description: 'Telkom Digistar - Managing digital talent programs.', orbitIndex: 0, position: 0.15, imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Academic Affairs', description: 'HMIT Telkom - Planning academic & student support.', orbitIndex: 1, position: 0.35, imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Public Relations', description: 'Youth Ranger Indonesia - Brand narrative & engagement.', orbitIndex: 0, position: 0.55, imageUrl: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Fundraising Lead', description: 'GI BEI Telkom - Strategic donor & sponsorship outreach.', orbitIndex: 1, position: 0.75, imageUrl: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Network Assistant', description: 'IFLAB Assistant - Guiding Socket Programming projects.', orbitIndex: 0, position: 0.9, imageUrl: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'HR Management', description: 'CPS Laboratory - Fostering lab development & culture.', orbitIndex: 1, position: 0.02, imageUrl: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=400&auto=format&fit=crop&fm=webp" },
+        { label: 'Web Development', description: 'Building responsive interfaces and production-ready web applications.', orbitIndex: 0, position: 0.15, imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400&auto=format&fit=crop&fm=webp" },
+        { label: 'REST APIs', description: 'Designing modular API integrations and backend communication layers.', orbitIndex: 1, position: 0.35, imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=400&auto=format&fit=crop&fm=webp" },
+        { label: 'Data Systems', description: 'Managing data validation, cleansing, ETL workflows, and database operations.', orbitIndex: 0, position: 0.55, imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400&auto=format&fit=crop&fm=webp" },
+        { label: 'E-Commerce', description: 'Managing digital catalogs, inventory workflows, orders, and marketplace operations.', orbitIndex: 1, position: 0.75, imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=400&auto=format&fit=crop&fm=webp" },
+        { label: 'Automation', description: 'Turning repetitive workflows into reliable scripts and scalable processes.', orbitIndex: 0, position: 0.9, imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=400&auto=format&fit=crop&fm=webp" },
+        { label: 'Performance', description: 'Optimizing responsive interfaces, application performance, and delivery workflows.', orbitIndex: 1, position: 0.02, imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&auto=format&fit=crop&fm=webp" },
     ],
     experience: [
         { label: 'CV Researcher', description: 'CPS Lab - End-to-end intelligent model development.', orbitIndex: 0, position: 0.2, imageUrl: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=400&auto=format&fit=crop&fm=webp" },
