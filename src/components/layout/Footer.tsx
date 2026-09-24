@@ -419,7 +419,7 @@ export function Footer() {
                                 <div className="mt-auto overflow-hidden flex-shrink-0 relative -translate-y-[7vh]">
                                     <motion.h2
                                         initial={{ opacity: 0, y: "100%" }}
-                                        animate={isAboutExpanded ? { opacity: 0, y: "120%" } : { opacity: 1, y: "38%" }}
+                                        animate={isAboutExpanded ? { opacity: 0, y: "120%" } : { opacity: 1, y: "8%" }}
                                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                                         className="text-[18vw] font-black leading-none text-zinc-900 dark:text-white tracking-tighter select-none text-center"
                                     >
@@ -453,7 +453,7 @@ function SocialHoverLink({ label, username, href }: { label: string; username: s
                         initial={{ opacity: 0, x: 5 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 5 }}
-                        className="absolute left-full top-1/2 -translate-y-1/2 ml-[clamp(8px,1vw,16px)] whitespace-nowrap z-50 pointer-events-none"
+                        className="absolute left-[clamp(120px,8vw,150px)] top-1/2 -translate-y-1/2 whitespace-nowrap z-50 pointer-events-none"
                     >
                         <span className="text-[clamp(12px,1.1vw,18px)] font-medium text-zinc-400 dark:text-zinc-500 select-all">
                             {username}
