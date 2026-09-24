@@ -39,7 +39,7 @@ import { motion, AnimatePresence, useInView, animate } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import { useIsInStack } from './showcase-stack';
 
-const KAGGLE_USER = "Arfazrll";
+const KAGGLE_USER = "Arham43-ops";
 
 // --- Achievements (Circular Tokens) ---
 const ACHIEVEMENT_LIST = [
