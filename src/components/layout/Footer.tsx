@@ -222,7 +222,7 @@ export function Footer() {
                                             <Fragment key={social.platform}>
                                                 {social.platform === 'Twitter' && (
                                                     <motion.a
-                                                        href="https://arfazrllworkspace.vercel.app/"
+                                                        href="https://arham-workspace.vercel.app/"
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="p-1.5 rounded-full hover:bg-foreground/5 transition-all text-muted-foreground hover:text-foreground hover:scale-110 active:scale-95"
@@ -404,7 +404,7 @@ export function Footer() {
                                 </div>
 
                                 {/* Bottom Brand Name - Scaled and Clipped (Top-half visible) */}
-                                <div className="mt-auto overflow-hidden flex-shrink-0 relative">
+                                <div className="mt-auto overflow-hidden flex-shrink-0 relative -mb-[1.5vw] md:-mb-[2vw]">
                                     <motion.h2
                                         initial={{ opacity: 0, y: "100%" }}
                                         animate={isAboutExpanded ? { opacity: 0, y: "120%" } : { opacity: 1, y: "38%" }}
