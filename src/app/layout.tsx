@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Playfair_Display, Alex_Brush } from 'next/font/g
 import { getMessages, getLocale } from 'next-intl/server';
 import { ThemeProvider, I18nProvider, SmoothScrollProvider } from '@/providers';
 import { portfolioData } from '@/data/portfolio';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import '@/styles/globals.css';
 
@@ -183,6 +184,7 @@ export default async function RootLayout({
                         </SmoothScrollProvider>
                     </I18nProvider>
                 </ThemeProvider>
+                <SpeedInsights />
             </body>
         </html>
     );
