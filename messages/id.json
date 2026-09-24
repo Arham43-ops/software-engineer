@@ -70,7 +70,7 @@
             "scope": "Berfokus pada model prediktif, pemrosesan data yang dioptimalkan, dan pipeline RAG yang dirancang untuk lingkungan produksi dan performa terukur.",
             "bridging": "Menghubungkan lab dan sistem langsung.",
             "integration": "Selain model, saya merancang ekosistem full-stack: backend yang aman, arsitektur data yang kuat, dan pipeline yang skalabel.",
-            "signature": "Azril",
+            "signature": "Arham",
             "role": "AI, Data & Software Engineer",
             "aboutMe": "Tentang Saya",
             "scroll": "Scroll untuk Jelajah",
@@ -137,53 +137,43 @@
             },
             "experiencesList": [
                 {
-                    "company": "Dicoding Academy",
-                    "role": "PENGULAS KODE MACHINE LEARNING",
-                    "desc": "Evaluasi teknis dan penjaminan kualitas pengajuan proyek ML. Memvalidasi kebenaran logis, efisiensi, dan menegakkan praktik terbaik industri bagi peserta."
+                    "company": "ICAT Internship Studio",
+                    "role": "MAGANG DESAIN DAN PENGEMBANGAN WEB",
+                    "desc": "Membangun antarmuka responsif, mengintegrasikan REST API, dan meningkatkan performa aplikasi melalui rekayasa web."
                 },
                 {
-                    "company": "Advanced Software Engineering Laboratory",
-                    "role": "MAGANG ANALIS SISTEM",
-                    "desc": "Menerjemahkan persyaratan kompleks ke dalam dokumentasi SRS dan merancang arsitektur sistem menggunakan diagram UML. Rekayasa kolaboratif yang berfokus pada desain perangkat lunak yang kuat."
+                    "company": "Injala Pvt. Ltd",
+                    "role": "SPESIALIS MANAJEMEN DATA & SISTEM",
+                    "desc": "Menangani ingest data, validasi, pembersihan, verifikasi, dan alur kerja ETL terstruktur."
                 },
                 {
-                    "company": "Cyber Physical System Laboratory",
-                    "role": "ASISTEN PENELITI (KONTRAK)",
-                    "desc": "Mengembangkan produk riset berbasis AI dan merancang materi pembelajaran untuk Deep Learning and Computer Vision. Berkontribusi dalam inisiatif riset kolaboratif dalam sistem cerdas."
-                },
-                {
-                    "company": "Pusat Riset HUMIC Engineering",
-                    "role": "MAGANG PENGEMBANG AI",
-                    "desc": "Membangun model deteksi serangan berbasis Transformer untuk aplikasi keamanan siber. Mengelola dataset skala besar melalui pipeline ML penuh — dari prapemprosesan hingga optimasi hiperparameter."
-                },
-                {
-                    "company": "Cyber Physical System Laboratory",
-                    "role": "MAGANG PENELITI COMPUTER VISION",
-                    "desc": "Pengembangan model cerdas end-to-end menggunakan arsitektur Deep Learning terkini. Menerapkan algoritma ML untuk aplikasi AIoT dunia nyata termasuk sistem estimasi pose manusia."
+                    "company": "Genuine Bags",
+                    "role": "SPESIALIS OPERASI E-COMMERCE & PLATFORM DIGITAL",
+                    "desc": "Mengelola katalog digital, sinkronisasi inventaris, alur pesanan, konten marketplace, dan otomasi."
                 }
             ],
             "projectsList": [
                 {
-                    "title": "Creative Portfolio Website",
-                    "desc": "Portofolio modern dan beranimasi dengan elemen 3D, interaksi simulasi fisika, dan efek warp berbasis shader. Direkayasa untuk performa tinggi dan pengalaman pengguna yang imersif."
+                    "title": "Glassmorphism Portfolio",
+                    "desc": "Portofolio interaktif dengan antarmuka glassmorphism, latar animasi, desain responsif, dan elemen visual 3D."
                 },
                 {
-                    "title": "SNBTIn - Platform Persiapan SNBT 2025",
-                    "desc": "Platform EdTech terkemuka di Indonesia untuk persiapan ujian. Menampilkan ekosistem pembelajaran komprehensif dengan video interaktif, latihan soal, dan analitik real-time."
+                    "title": "LangSphere — Aplikasi Pembelajaran Bahasa AI",
+                    "desc": "Aplikasi Android pembelajaran bahasa dengan AI percakapan, gamifikasi, papan peringkat Firebase, dan penyimpanan offline."
                 },
                 {
-                    "title": "TerraFlow Platform",
-                    "desc": "Solusi IoT perusahaan untuk pertanian presisi. Node sensor ESP32 berkomunikasi langsung dengan Firebase melalui backend Go (Gin), dengan dashboard Next.js untuk monitoring real-time dan kontrol aktuator."
+                    "title": "PhisGuard — AI-Powered Phishing Sentinel",
+                    "desc": "Platform keamanan siber hibrida yang menggabungkan threat intelligence API dengan machine learning lokal untuk analisis phishing dan penilaian risiko."
                 },
                 {
-                    "title": "DocsInsight Engine",
-                    "desc": "Platform RAG privat untuk analisis dokumen cerdas. Didukung oleh LLM lokal melalui Ollama, dengan orkestrasi LangChain dan ChromaDB vector search — sepenuhnya self-hosted untuk privasi data."
+                    "title": "StockEasy — Platform Bursa Saham Online",
+                    "desc": "Platform bursa saham berbasis Django dengan data pasar, portofolio, watchlist, alur trading, manajemen IPO, dan analitik."
                 },
                 {
-                    "title": "Manajemen Dental POLABDC",
-                    "desc": "SaaS klinik gigi bertenaga AI dengan prediksi penyakit, manajemen antrean real-time, dan arsitektur Monorepo yang menghubungkan Next.js, Express.js, dan microservice AI Python."
+                    "title": "Android Habit Tracker",
+                    "desc": "Aplikasi pelacakan kebiasaan berbasis Kotlin dengan streak, analitik progres, pengingat, penjadwalan fleksibel, dan penyimpanan lokal."
                 }
-            ],
+            ,
             "discoverMore": "Temukan Lebih Lanjut"
         }
     },
@@ -336,11 +326,11 @@
         "faqData": [
             {
                 "q": "Apa bidang keahlian utama Anda?",
-                "a": "Sebagai mahasiswa Teknologi Informasi di Telkom University dan Asisten Peneliti di Laboratorium Cyber Physical System, saya berspesialisasi dalam persimpangan Kecerdasan Buatan (Computer Vision & Deep Learning), Full-stack Development (Next.js & Node.js), dan teknologi Blockchain/Web3 yang sedang berkembang."
+                "a": "Sebagai mahasiswa Teknologi Informasi di L. J. University dan Asisten Peneliti di Laboratorium Cyber Physical System, saya berspesialisasi dalam persimpangan Kecerdasan Buatan (Computer Vision & Deep Learning), Full-stack Development (Next.js & Node.js), dan teknologi Blockchain/Web3 yang sedang berkembang."
             },
             {
                 "q": "Apakah Anda tersedia untuk kolaborasi riset atau freelance?",
-                "a": "Tentu saja. Saat ini saya aktif dalam riset AI di CPS Lab dan Pusat Riset HUMIC, tetapi saya selalu terbuka untuk proyek freelance inovatif, magang, atau kolaborasi teknis yang menjembatani inovasi dengan eksekusi strategis."
+                "a": "Tentu saja. Saat ini saya aktif dalam riset AI di current technical work dan Pusat Riset HUMIC, tetapi saya selalu terbuka untuk proyek freelance inovatif, magang, atau kolaborasi teknis yang menjembatani inovasi dengan eksekusi strategis."
             },
             {
                 "q": "Apa tech stack tipikal Anda untuk produksi?",
@@ -352,7 +342,7 @@
             },
             {
                 "q": "Bagaimana cara memulai kemitraan atau proyek?",
-                "a": "Cara paling efisien adalah menggunakan formulir kontak di atas atau menghubungi langsung melalui email di azril4974@gmail.com. Saya biasanya dapat merespons dalam waktu 24 jam untuk mendiskusikan bagaimana keterampilan teknis saya dapat memberikan nilai tambah bagi inisiatif Anda."
+                "a": "Cara paling efisien adalah menggunakan formulir kontak di atas atau menghubungi langsung melalui email di topiwalaarham07@gmail.com. Saya biasanya dapat merespons dalam waktu 24 jam untuk mendiskusikan bagaimana keterampilan teknis saya dapat memberikan nilai tambah bagi inisiatif Anda."
             }
         ]
     },
@@ -482,7 +472,7 @@
     },
     "chatbot": {
         "title": "Asisten AI",
-        "subtitle": "Tanya saya tentang Azril",
+        "subtitle": "Tanya saya tentang Arham",
         "placeholder": "Ketik pesan...",
         "greeting": "Halo! Saya asisten AI untuk **{name}**. 👋\n\nSaya bisa menjawab pertanyaan seputar:\n- Skill & keahlian teknis\n- Project dan karya\n- Pengalaman kerja\n- Pendidikan\n- Dan info lainnya!\n\nAda yang ingin kamu tanyakan?",
         "suggestions": [
