@@ -15,8 +15,8 @@ export const portfolioData: PortfolioData = {
         languages: [{ name: 'English', level: 'Native' }],
         socialLinks: [
             { platform: 'GitHub', url: 'https://github.com/Arham43-ops', icon: 'github', username: 'Arham43-ops' },
-            { platform: 'LinkedIn', url: 'https://linkedin.com/in/arham', icon: 'linkedin', username: 'arham' },
-            { platform: 'Instagram', url: 'https://www.instagram.com/wanderlust._.43/', icon: 'instagram', username: 'wanderlust._.43' },
+            { platform: 'LinkedIn', url: 'https://linkedin.com/in/Arham43-ops', icon: 'linkedin', username: 'Arham43-ops' },
+            { platform: 'Instagram', url: 'https://www.instagram.com/arham.tsx/', icon: 'instagram', username: 'arham.tsx' },
         ],
     },
     projects: [
