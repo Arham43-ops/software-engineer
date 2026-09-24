@@ -876,16 +876,7 @@ function ExperienceTimeline({ isLowPowerMode }: { isLowPowerMode: boolean }) {
             <div className="space-y-12">
                 {group.experiences.map((exp) => {
                     const logoSrc = exp.logo || "";
-                    const needsInvertInDarkMode = logoSrc.includes("McKinsey") || 
-                                                logoSrc.includes("TelkomUniversity") || 
-                                                logoSrc.includes("softagelogo") || 
-                                                logoSrc.includes("dinas-pangan") ||
-                                                logoSrc.includes("yotlogo") ||
-                                                logoSrc.includes("youth-ranger") ||
-                                                logoSrc.includes("aiesec") ||
-                                                logoSrc.includes("microsot") ||
-                                                logoSrc.includes("dicoding") ||
-                                                logoSrc.includes("cisometric");
+                    const needsInvertInDarkMode = false;
                     
                     const needsWhiteBgRemovalInDarkMode = logoSrc.includes("logobei") || logoSrc.includes("birulangit");
                     const needsInvertInLightMode = logoSrc.includes("flyrank") || logoSrc.includes("FlyRank");
