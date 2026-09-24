@@ -398,12 +398,12 @@ export function Footer() {
                                                 {localTime}
                                             </p>
                                             <a
-                                                href="https://www.google.com/maps/place/Jakarta,+Indonesia"
+                                                href="https://www.google.com/maps/place/Ahmedabad,+Gujarat,+India"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="text-zinc-900 dark:text-white text-[1.2vw] min-text-[14px] font-medium tracking-tight hover:text-zinc-500 dark:hover:text-zinc-400 transition-colors inline-block"
                                             >
-                                                Jakarta, Indonesia
+                                                Ahmedabad, Gujarat, India
                                             </a>
                                         </FooterColumn>
 
