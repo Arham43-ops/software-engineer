@@ -81,7 +81,7 @@ export default function ExperienceStickyScroll({ isLowPowerMode = false }: { isL
                     </div>
                 </motion.div>
 
-                {/* SMAN 88 Box (Right) - Hover Effect: Scale & Orange Glow */}
+                {/* A. G. HIGH SCHOOL Box (Right) - Hover Effect: Scale & Orange Glow */}
                 <motion.div 
                     initial={isLowPowerMode ? {} : { opacity: 0, y: 20 }}
                     whileInView={isLowPowerMode ? {} : { opacity: 1, y: 0 }}
