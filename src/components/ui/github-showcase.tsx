@@ -29,52 +29,40 @@ const GITHUB_USER = "Arham43-ops";
 
 const PINNED_REPOS = [
   {
-    name: "PersonalBlog",
-    desc: "Professional portfolio built with Next.js 15, TypeScript, and Tailwind CSS. Features 3D physics (R3F), GSAP animations, and real-time coding stats via WakaTime and GitHub APIs. Support EN/ID.",
-    stars: 67,
-    forks: 12,
-    lang: "TypeScript",
-    url: "https://github.com/Arfazrll/PersonalBlog"
+    name: "Glassmorphism_Portfolio",
+    desc: "Interactive portfolio project featuring glassmorphism UI, animated backgrounds, responsive design, and 3D visual elements.",
+    stars: 0, forks: 0, lang: "JavaScript",
+    url: "https://github.com/Arham43-ops/Glassmorphism_Portfolio"
   },
   {
-    name: "Browser-Automation-Agent",
-    desc: "A robust CLI powering autonomous web agents. Seamlessly integrate Playwright, browser-use, and LangChain to automate your daily web workflows.",
-    stars: 10,
-    forks: 2,
-    lang: "Python",
-    url: "https://github.com/Arfazrll/Browser-Automation-Agent"
+    name: "langsphere-android-app",
+    desc: "AI-powered Android language-learning application with conversational AI, gamification, Firebase leaderboards, and offline persistence.",
+    stars: 0, forks: 0, lang: "Kotlin",
+    url: "https://github.com/Arham43-ops/langsphere-android-app"
   },
   {
-    name: "Security-Automation-GenAI",
-    desc: "Deep Learning and Generative AI (Transformers & Attention Mechanisms) for automated cybersecurity threat detection, covering SQL Injection, DDoS, Network Intrusion, and Malware analysis.",
-    stars: 9,
-    forks: 2,
-    lang: "Jupyter Notebook",
-    url: "https://github.com/Arfazrll/Security-Automation-GenAI"
+    name: "PhisGaurd",
+    desc: "Hybrid cybersecurity platform combining threat-intelligence APIs with local machine learning for phishing analysis and risk scoring.",
+    stars: 0, forks: 0, lang: "Python",
+    url: "https://github.com/Arham43-ops/PhisGaurd"
   },
   {
-    name: "POLABDC",
-    desc: "POLABDC (Pondok Labu Dental Care) Dental Clinic Management System (SaaS) powered by AI. Built with Typescript Next.js, Express, Prisma, Supabase, and Google Gemini AI for assistance.",
-    stars: 8,
-    forks: 15,
-    lang: "TypeScript",
-    url: "https://github.com/Arfazrll/POLABDC"
+    name: "StockEasy",
+    desc: "Django stock exchange platform with market data, portfolios, watchlists, trading workflows, IPO management, analytics, and AI utilities.",
+    stars: 0, forks: 0, lang: "Python",
+    url: "https://github.com/Arham43-ops/StockEasy"
   },
   {
-    name: "Digilibzx",
-    desc: "Modern Full-Stack Digital Library System built with Java Spring Boot and TypeScript Next.js . Features AI-powered book summarization (Gemini), smart borrowing cart, and Dockerized deployment.",
-    stars: 12,
-    forks: 2,
-    lang: "TypeScript",
-    url: "https://github.com/Arfazrll/Digilibzx"
+    name: "Android_Habit-Tracker",
+    desc: "Modern Kotlin habit-tracking application with streaks, progress analytics, reminders, flexible scheduling, and local persistence.",
+    stars: 0, forks: 0, lang: "Kotlin",
+    url: "https://github.com/Arham43-ops/Android_Habit-Tracker"
   },
   {
-    name: "Swarm-Agent-Orchestrator",
-    desc: "Autonomous multi-agent content orchestration system for high-performance blog drafting and research. Powered by OpenAI Swarm architecture.",
-    stars: 10,
-    forks: 5,
-    lang: "Vue",
-    url: "https://github.com/Arfazrll/Swarm-Agent-Orchestrator"
+    name: "Flipkart_Clone",
+    desc: "Django e-commerce platform with authentication, product catalog, wishlist, cart, checkout, order tracking, reviews, and administration.",
+    stars: 0, forks: 0, lang: "Python",
+    url: "https://github.com/Arham43-ops/Flipkart_Clone"
   }
 ];
 
