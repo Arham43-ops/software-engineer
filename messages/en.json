@@ -137,53 +137,43 @@
             },
             "experiencesList": [
                 {
-                    "company": "Dicoding Academy",
-                    "role": "MACHINE LEARNING CODE REVIEWER",
-                    "desc": "Technical evaluation and quality assurance of ML project submissions. Validating logical correctness, efficiency, and enforcing industry best practices for learners."
+                    "company": "ICAT Internship Studio",
+                    "role": "WEB DESIGN AND DEVELOPMENT INTERN",
+                    "desc": "Built responsive interfaces, integrated REST APIs, and improved application performance through practical web engineering."
                 },
                 {
-                    "company": "Advanced Software Engineering Laboratory",
-                    "role": "SYSTEM ANALYST INTERN",
-                    "desc": "Translating complex requirements into SRS documentation and designing system architectures using UML diagrams. focused on software design."
+                    "company": "Injala Pvt. Ltd",
+                    "role": "DATA MANAGEMENT & SYSTEMS SPECIALIST",
+                    "desc": "Handled data ingestion, validation, cleansing, verification, and structured ETL workflows."
                 },
                 {
-                    "company": "Cyber Physical System Laboratory",
-                    "role": "RESEARCH ASSISTANT (CONTRACT)",
-                    "desc": "Developing AI-driven research products and designing learning materials for Deep Learning and Computer Vision. Contributing to intelligent systems."
-                },
-                {
-                    "company": "HUMIC Engineering Research Center",
-                    "role": "AI DEVELOPER INTERN",
-                    "desc": "Built Transformer-based attack detection models for cybersecurity applications. Managed large-scale datasets through the full ML pipeline."
-                },
-                {
-                    "company": "Cyber Physical System Laboratory",
-                    "role": "COMPUTER VISION RESEARCHER INTERN",
-                    "desc": "End-to-end development of intelligent models using state-of-the-art Deep Learning architectures. Implemented ML algorithms for real-world applications."
+                    "company": "Genuine Bags",
+                    "role": "E-COMMERCE OPERATIONS & DIGITAL PLATFORMS SPECIALIST",
+                    "desc": "Managed digital catalogs, inventory synchronization, order workflows, marketplace content, and automation."
                 }
             ],
             "projectsList": [
                 {
-                    "title": "Creative Portfolio Website",
-                    "desc": "Modern, animated portfolio with 3D elements, physics-simulated interactions, and shader-based warp effects. Engineered for high performance & optimization."
+                    "title": "Glassmorphism Portfolio",
+                    "desc": "Interactive portfolio with glassmorphism UI, animated backgrounds, responsive design, and 3D visual elements."
                 },
                 {
-                    "title": "SNBTIn - Platform Persiapan SNBT 2025",
-                    "desc": "Leading EdTech platform in Indonesia for exam preparation. Featuring a comprehensive learning ecosystem with interactive and real-time analytics."
+                    "title": "LangSphere — AI Language Learning App",
+                    "desc": "Android language-learning application with conversational AI, gamification, Firebase leaderboards, and offline persistence."
                 },
                 {
-                    "title": "TerraFlow Platform",
-                    "desc": "Enterprise IoT solution for precision agriculture. ESP32 sensor nodes communicate with Firebase via a Go (Gin), with a Next.js dashboard for real-time monitoring"
+                    "title": "PhisGuard — AI-Powered Phishing Sentinel",
+                    "desc": "Hybrid cybersecurity platform combining threat intelligence APIs with local machine learning for phishing analysis and risk scoring."
                 },
                 {
-                    "title": "DocsInsight Engine",
-                    "desc": "Private RAG platform for intelligent document analysis. Powered by local LLMs through Ollama, with LangChain orchestration and ChromaDB vector search."
+                    "title": "StockEasy — Online Stock Exchange Platform",
+                    "desc": "Django stock exchange platform with market data, portfolios, watchlists, trading workflows, IPO management, and analytics."
                 },
                 {
-                    "title": "POLABDC Dental Management",
-                    "desc": "AI-powered dental clinic SaaS with disease prediction, real-time queue management, and a Monorepo architecture Next.js, Express.js, and Python"
+                    "title": "Android Habit Tracker",
+                    "desc": "Kotlin habit-tracking app with streaks, progress analytics, reminders, flexible scheduling, and local persistence."
                 }
-            ],
+            ,
             "discoverMore": "Discover More"
         }
     },
@@ -351,11 +341,11 @@
         "faqData": [
             {
                 "q": "What is your main area of expertise?",
-                "a": "As an Information Technology student at Telkom University and a Research Assistant at the Cyber Physical System Laboratory, I specialize in the intersection of Artificial Intelligence (Computer Vision & Deep Learning), Full-stack Development (Next.js & Node.js), and emerging Blockchain/Web3 technologies."
+                "a": "As an Information Technology student at L. J. University and a Research Assistant at the Information Technology projects, I specialize in the intersection of Artificial Intelligence (Computer Vision & Deep Learning), Full-stack Development (Next.js & Node.js), and emerging Blockchain/Web3 technologies."
             },
             {
                 "q": "Are you available for research or freelance collaborations?",
-                "a": "Absolutely. I am currently active in AI research at the CPS Lab and HUMIC Research Center, but I'm always open to innovative freelance projects, internships, or technical collaborations that bridge innovation with strategic execution."
+                "a": "Absolutely. I am currently active in AI research at the current technical work and current professional experience, but I'm always open to innovative freelance projects, internships, or technical collaborations that bridge innovation with strategic execution."
             },
             {
                 "q": "What is your typical tech stack for production?",
@@ -367,7 +357,7 @@
             },
             {
                 "q": "How can we start a partnership or project?",
-                "a": "The most efficient way is to use the contact form above or reach out directly via email at azril4974@gmail.com. I'm usually able to respond within 24 hours to discuss how my technical skill set can add value to your initiatives."
+                "a": "The most efficient way is to use the contact form above or reach out directly via email at topiwalaarham07@gmail.com. I'm usually able to respond within 24 hours to discuss how my technical skill set can add value to your initiatives."
             }
         ]
     },
@@ -497,7 +487,7 @@
     },
     "chatbot": {
         "title": "AI Assistant",
-        "subtitle": "Ask me about Azril",
+        "subtitle": "Ask me about Arham",
         "placeholder": "Type a message...",
         "greeting": "Hi! I'm an AI assistant for **{name}**. 👋\n\nI can answer questions about:\n- Skills & technical expertise\n- Projects and work\n- Experience\n- Education\n- And more!\n\nAnything you'd like to ask?",
         "suggestions": [
