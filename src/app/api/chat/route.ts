@@ -59,16 +59,16 @@ ${projectList}
 ${expList || 'See portfolio for details.'}
 
 ## Education
-${eduList || 'Information Technology, Telkom University.'}
+${eduList || 'Information Technology, L. J. University.'}
 
 ## Technical Skills
 ${skillList || 'AI, Machine Learning, Full Stack Development, Blockchain.'}
 
 ## Soft Skills
-${softSkillList || 'Leadership, Communication, Problem Solving.'}
+${softSkillList || 'Communication, Problem Solving, Collaboration.'}
 
 ## Tools & Technologies
-${toolList || 'VS Code, Docker, GitHub, Figma.'}
+${toolList || 'VS Code, GitHub, MySQL, Streamlit.'}
 
 ## Achievements & Certifications
 ${achievementList || 'See portfolio for details.'}
