@@ -24,29 +24,22 @@ interface InnovativeExperienceHeroProps {
 
 const NODES_DATA: Record<string, NodeData[]> = {
     education: [
-        { label: 'Telkom University', description: 'Bachelor of Technology - Information Technology (GPA 3.8/4.0).', orbitIndex: 0, position: 0.1, imageUrl: "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'SMAN 88 Jakarta', description: 'High School Diploma - Science (IPA) Major.', orbitIndex: 1, position: 0.25, imageUrl: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Coding Camp DBS', description: 'Scholarship Awardee – Intensive AI Engineer training.', orbitIndex: 0, position: 0.45, imageUrl: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'IDCamp IOH', description: 'Machine Learning Engineer Program (Industry Standard).', orbitIndex: 1, position: 0.65, imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'CPS Research Asst', description: 'Deep Learning & CV instruction and academic review.', orbitIndex: 0, position: 0.85, imageUrl: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'GDSC ML Path', description: 'Mastering regression, classification, and core ML.', orbitIndex: 1, position: 0.05, imageUrl: "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=400&auto=format&fit=crop&fm=webp" },
+        { label: 'L. J. University', description: 'BSc IT — Information Technology, 2023–2026.', orbitIndex: 0, position: 0.2, imageUrl: "/gallery/new-photo-1.jpeg" },
+        { label: 'A. G. HIGH SCHOOL', description: '12th Commerce / Higher Secondary Education, 2022–2023.', orbitIndex: 1, position: 0.55, imageUrl: "/gallery/new-photo-2.jpeg" },
     ],
     journey: [
-        { label: 'Web Development', description: 'Building responsive interfaces and production-ready web applications.', orbitIndex: 0, position: 0.15, imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'REST APIs', description: 'Designing modular API integrations and backend communication layers.', orbitIndex: 1, position: 0.35, imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Data Systems', description: 'Managing data validation, cleansing, ETL workflows, and database operations.', orbitIndex: 0, position: 0.55, imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'E-Commerce', description: 'Managing digital catalogs, inventory workflows, orders, and marketplace operations.', orbitIndex: 1, position: 0.75, imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Automation', description: 'Turning repetitive workflows into reliable scripts and scalable processes.', orbitIndex: 0, position: 0.9, imageUrl: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Performance', description: 'Optimizing responsive interfaces, application performance, and delivery workflows.', orbitIndex: 1, position: 0.02, imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&auto=format&fit=crop&fm=webp" },
+        { label: 'Web Development', description: 'Building responsive interfaces and production-ready web applications.', orbitIndex: 0, position: 0.15, imageUrl: "/gallery/new-photo-1.jpeg" },
+        { label: 'REST APIs', description: 'Designing modular API integrations and backend communication layers.', orbitIndex: 1, position: 0.35, imageUrl: "/gallery/new-photo-2.jpeg" },
+        { label: 'Data Systems', description: 'Managing data validation, cleansing, ETL workflows, and database operations.', orbitIndex: 0, position: 0.55, imageUrl: "/gallery/new-photo-3.jpeg" },
+        { label: 'E-Commerce', description: 'Managing digital catalogs, inventory workflows, orders, and marketplace operations.', orbitIndex: 1, position: 0.75, imageUrl: "/gallery/new-photo-4.jpeg" },
+        { label: 'Automation', description: 'Turning repetitive workflows into reliable scripts and scalable processes.', orbitIndex: 0, position: 0.9, imageUrl: "/gallery/new-photo-5.jpeg" },
+        { label: 'Performance', description: 'Optimizing responsive interfaces, application performance, and delivery workflows.', orbitIndex: 1, position: 0.02, imageUrl: "/gallery/new-photo-6.jpeg" },
     ],
     experience: [
-        { label: 'CV Researcher', description: 'CPS Lab - End-to-end intelligent model development.', orbitIndex: 0, position: 0.2, imageUrl: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'System Analyst', description: 'ASE Lab - Translating requirements to SRS/SDD/UML.', orbitIndex: 1, position: 0.45, imageUrl: "https://images.unsplash.com/photo-1454165833911-5421db635848?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Swarm AI Lead', description: 'Multi-agent blog generation engine (Llama 3.3).', orbitIndex: 0, position: 0.6, imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'Automation Eng.', description: 'Browser Agent CLI for AI-driven browser control.', orbitIndex: 1, position: 0.8, imageUrl: "https://images.unsplash.com/photo-1518433278988-c7bc488ce92d?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'IoT Engineering', description: 'Terraflow - Direct-to-Cloud IoT for agriculture.', orbitIndex: 0, position: 0.95, imageUrl: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=400&auto=format&fit=crop&fm=webp" },
-        { label: 'RAG Systems', description: 'DocsInsight Engine - Enterprise private RAG system.', orbitIndex: 1, position: 0.1, imageUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=400&auto=format&fit=crop&fm=webp" },
-    ]
+        { label: 'ICAT Internship Studio', description: 'Web Design and Development Intern — responsive interfaces, REST APIs, and performance.', orbitIndex: 0, position: 0.2, imageUrl: "/gallery/new-photo-1.jpeg" },
+        { label: 'Injala Pvt. Ltd', description: 'Data Management & Systems Specialist — ingestion, validation, cleansing, and ETL.', orbitIndex: 1, position: 0.5, imageUrl: "/gallery/new-photo-3.jpeg" },
+        { label: 'Genuine Bags', description: 'E-Commerce Operations & Digital Platforms Specialist — catalogs, inventory, and automation.', orbitIndex: 0, position: 0.8, imageUrl: "/gallery/new-photo-5.jpeg" },
+    ],
 };
 
 const OUTER_PATH = "M 100,300 a 400,180 -15 1,0 800,0 a 400,180 -15 1,0 -800,0";
