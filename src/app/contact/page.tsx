@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { Send, CheckCircle, AlertCircle, Loader2, Disc, Music, ArrowUpRight, Sparkles, HelpCircle, MessageSquare, ExternalLink, Github, Linkedin, Twitter, Instagram, ChevronDown } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, Loader2, Disc, Music, ArrowUpRight, Sparkles, HelpCircle, MessageSquare, ExternalLink, Github, Linkedin, Instagram, ChevronDown, Code2, Languages } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { portfolioData } from '@/data/portfolio';
 import dynamic from 'next/dynamic';
@@ -53,10 +53,10 @@ function SocialTicker({ items, direction = 'left', speed = 30, isLowPowerMode = 
 const socialIconsMap: Record<string, React.ElementType> = {
     github: Github,
     linkedin: Linkedin,
-    twitter: Twitter,
     instagram: Instagram,
-    discord: Disc,
-    spotify: Music
+    telegram: Send,
+    hackerrank: Code2,
+    duolingo: Languages
 };
 
 function SocialCard({ item }: { item: any }) {
@@ -290,10 +290,10 @@ function FAQSection() {
 const socialDescriptions: Record<string, string> = {
     GitHub: "Open Source",
     LinkedIn: "Professional",
-    Twitter: "Thoughts",
     Instagram: "Lifestyle",
-    Discord: "Community",
-    Spotify: "Music"
+    Telegram: "Messaging",
+    HackerRank: "Coding",
+    Duolingo: "Languages"
 };
 
 import { usePerformance } from '@/hooks/usePerformance';
@@ -314,7 +314,30 @@ export default function ContactPage() {
     };
 
     const row1Real = ['linkedin', 'github', 'instagram'].map(getSocialItem);
-    const row2Real = ['twitter', 'discord', 'spotify'].map(getSocialItem);
+
+    const row2Real = [
+        {
+            name: 'Telegram',
+            username: 'Arham43_ops',
+            body: 'Messaging',
+            image: socialIconsMap.telegram,
+            url: 'https://t.me/Arham43_ops',
+        },
+        {
+            name: 'HackerRank',
+            username: 'Arham43-ops',
+            body: 'Coding',
+            image: socialIconsMap.hackerrank,
+            url: 'https://www.hackerrank.com/profile/Arham43-ops',
+        },
+        {
+            name: 'Duolingo',
+            username: 'Arham43-ops',
+            body: 'Languages',
+            image: socialIconsMap.duolingo,
+            url: 'https://www.duolingo.com/profile/Arham43-ops',
+        },
+    ];
 
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
