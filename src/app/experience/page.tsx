@@ -46,7 +46,7 @@ const highlightContent = {
     journey: {
         title: "Crafting Experiences",
         highlight: "That Matter",
-        description: "From internships to leadership roles, each step has been a lesson in collaboration, innovation, and pushing boundaries."
+        description: "From web development and data systems to e-commerce operations, each step has strengthened my ability to build, automate, and optimize digital solutions."
     },
     experience: {
         title: "Turning Ideas",
