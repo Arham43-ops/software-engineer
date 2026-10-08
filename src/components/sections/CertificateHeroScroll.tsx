@@ -8,13 +8,13 @@ import { ChevronDown, ExternalLink } from "lucide-react";
 interface CertificateHeroScrollProps { onDownloadClick?: () => void; isLowPowerMode?: boolean; }
 interface CertificateItem { id: string; name: string; image: string; pdf: string; }
 
-const FALLBACK_CERTIFICATES: CertificateItem[] = [
-  { id: "fallback-1", name: "AI Infrastructure and Operations Fundamentals", image: "/Certificate/AI Infrastructure and Operations Fundamentals.png", pdf: "/Certificate/AI Infrastructure and Operations Fundamentals.pdf" },
-  { id: "fallback-2", name: "AI and Machine Learning Algorithms and Techniques", image: "/Certificate/AI and Machine Learning Algorithms and Techniques.png", pdf: "/Certificate/AI and Machine Learning Algorithms and Techniques.pdf" },
-  { id: "fallback-3", name: "Accelerate Your Job Search with AI", image: "/Certificate/Accelerate Your Job Search with AI.png", pdf: "/Certificate/Accelerate Your Job Search with AI.pdf" },
-  { id: "fallback-4", name: "Advanced Ethical Hacking & Cybersecurity", image: "/Certificate/Advanced Ethical Hacking & Cybersecurity.png", pdf: "/Certificate/Advanced Ethical Hacking & Cybersecurity.pdf" },
-  { id: "fallback-5", name: "Website Design and Development Internship", image: "/Certificate/Arham Topiwala - Website Design and Development Internship - Internship.png", pdf: "/Certificate/Arham Topiwala - Website Design and Development Internship - Internship.pdf" },
-  { id: "fallback-6", name: "Building AI Chatbots", image: "/Certificate/Chatbots.png", pdf: "/Certificate/Chatbots.pdf" },
+const CERTIFICATES: CertificateItem[] = [
+  { id: "hero-1", name: "Coursera Recognition — Learning Marathon Champion", image: "/Certificate/COURSERA-RECOGNITION-CERTIFICATE.svg", pdf: "/Certificate/COURSERA RECOGNITION CERTIFICATE.pdf" },
+  { id: "hero-2", name: "AI Infrastructure and Operations Fundamentals", image: "/Certificate/AI Infrastructure and Operations Fundamentals.png", pdf: "/Certificate/AI Infrastructure and Operations Fundamentals.pdf" },
+  { id: "hero-3", name: "AI and Machine Learning Algorithms and Techniques", image: "/Certificate/AI and Machine Learning Algorithms and Techniques.png", pdf: "/Certificate/AI and Machine Learning Algorithms and Techniques.pdf" },
+  { id: "hero-4", name: "Accelerate Your Job Search with AI", image: "/Certificate/Accelerate Your Job Search with AI.png", pdf: "/Certificate/Accelerate Your Job Search with AI.pdf" },
+  { id: "hero-5", name: "Advanced Ethical Hacking & Cybersecurity", image: "/Certificate/Advanced Ethical Hacking & Cybersecurity.png", pdf: "/Certificate/Advanced Ethical Hacking & Cybersecurity.pdf" },
+  { id: "hero-6", name: "Website Design and Development Internship", image: "/Certificate/Arham Topiwala - Website Design and Development Internship - Internship.png", pdf: "/Certificate/Arham Topiwala - Website Design and Development Internship - Internship.pdf" },
 ];
 
 const encodePath = (value: string) => {
@@ -22,33 +22,34 @@ const encodePath = (value: string) => {
   return value.split("/").map((part, i) => i === 0 ? part : encodeURIComponent(part)).join("/");
 };
 
-const CertificatePreview = ({ certificate }: { certificate: CertificateItem }) => {
-  const isPdf = certificate.pdf.toLowerCase().includes(".pdf") || certificate.pdf.startsWith("/api/certificates");
-  if (isPdf) {
-    return <iframe src={`${encodePath(certificate.pdf)}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} title={certificate.name} className="absolute inset-0 w-full h-full border-0 bg-white pointer-events-none" loading="lazy" />;
-  }
-  return <img src={encodePath(certificate.image)} alt={certificate.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />;
-};
+const normalizeTitle = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
 const CertificateHeroScroll: FC<CertificateHeroScrollProps> = ({ isLowPowerMode = false }) => {
-  const spacerRef = useRef<HTMLDivElement>(null); const fixedRef = useRef<HTMLDivElement>(null); const contentRef = useRef<HTMLDivElement>(null); const cardsRef = useRef<HTMLDivElement>(null);
+  const spacerRef = useRef<HTMLDivElement>(null);
+  const fixedRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const [activeCertificate, setActiveCertificate] = useState(0);
-  const [certificates, setCertificates] = useState<CertificateItem[]>(FALLBACK_CERTIFICATES);
+  const [certificates, setCertificates] = useState<CertificateItem[]>(CERTIFICATES);
 
   useEffect(() => {
     let cancelled = false;
     fetch('/api/certificates')
       .then((response) => response.ok ? response.json() : Promise.reject(new Error('Certificate sync failed')))
       .then((payload) => {
-        if (cancelled || !Array.isArray(payload.certificates) || payload.certificates.length === 0) return;
-        setCertificates(payload.certificates.map((certificate: { id: string; title: string; image: string; credentialUrl: string }) => ({
-          id: certificate.id,
-          name: certificate.title,
-          image: certificate.image,
-          pdf: certificate.credentialUrl,
+        if (cancelled || !Array.isArray(payload.certificates)) return;
+        const remote = payload.certificates.filter((certificate: { credentialId?: string }) => {
+          const path = String(certificate.credentialId || '');
+          return !/^Resumes\//i.test(path) && !/^Icat Internship\//i.test(path);
+        }) as Array<{ title: string; credentialUrl: string }>;
+
+        setCertificates(CERTIFICATES.map((certificate) => ({
+          ...certificate,
+          pdf: remote.find((item) => normalizeTitle(item.title) === normalizeTitle(certificate.name))?.credentialUrl || certificate.pdf,
         })));
       })
       .catch(() => undefined);
+
     return () => { cancelled = true; };
   }, []);
 
@@ -68,30 +69,9 @@ const CertificateHeroScroll: FC<CertificateHeroScrollProps> = ({ isLowPowerMode 
     }, spacerRef);
     const fadeTrigger = ScrollTrigger.create({ trigger: spacerRef.current, start: "bottom top", onEnter: () => gsap.to(fixedRef.current, { autoAlpha: 0, duration: 0.4 }), onLeaveBack: () => gsap.to(fixedRef.current, { autoAlpha: 1, duration: 0.4 }) });
     return () => { ctx.revert(); fadeTrigger.kill(); };
-  }, [isLowPowerMode, featured.length]);
+  }, [isLowPowerMode]);
 
-  return <>
-    <div ref={spacerRef} className="h-[300vh] w-full relative z-10 pointer-events-none" />
-    <div ref={fixedRef} className="fixed inset-0 z-10 h-screen w-full overflow-hidden bg-transparent pointer-events-none">
-      <div className="absolute inset-0 opacity-20 pointer-events-none"><div className="absolute top-[15%] right-[8%] w-[520px] h-[520px] bg-primary/10 blur-[100px] rounded-full" /><div className="absolute bottom-[5%] left-[5%] w-[420px] h-[420px] bg-secondary/10 blur-[100px] rounded-full" /></div>
-      <div ref={contentRef} className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-50 pt-10 pb-32">
-        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary/50 backdrop-blur-md border border-border/50 text-xs font-medium mb-6">Professional Milestones</div>
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50">Certificates<br />& Awards</h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">Explore the certifications, training credentials, and professional milestones.</p>
-        <button onClick={() => window.scrollTo({ top: window.innerHeight * 1.1, behavior: "smooth" })} className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all group pointer-events-auto"><span>Scroll to Explore</span><ChevronDown className="w-4 h-4 animate-bounce" /></button>
-      </div>
-      <div ref={cardsRef} className="absolute inset-0 pointer-events-none">
-        {featured.map((certificate, index) => <div key={certificate.id} className="absolute pointer-events-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/80 backdrop-blur-md group" style={{ top: index < 3 ? "15%" : "61%", left: index % 3 === 0 ? "5%" : index % 3 === 1 ? "39%" : "72%", width: index % 3 === 1 ? "20%" : "22%", height: index % 3 === 1 ? "22%" : "24%" }} onMouseEnter={() => setActiveCertificate(index)}>
-          <a href={encodePath(certificate.pdf)} target="_blank" rel="noopener noreferrer" className="block w-full h-full" aria-label={`Open ${certificate.name} certificate`}>
-            <CertificatePreview certificate={certificate} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-transparent pointer-events-none" />
-            <div className="absolute left-4 right-4 bottom-4"><div className="flex items-end justify-between gap-3"><span className="text-xs md:text-sm font-bold text-white leading-tight drop-shadow-lg line-clamp-2">{certificate.name}</span><ExternalLink className="w-4 h-4 text-white/80 shrink-0" /></div></div>
-          </a>
-        </div>)}
-      </div>
-      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-[60] hidden md:flex items-center gap-2 pointer-events-auto">{featured.map((certificate, index) => <a key={certificate.id} href={encodePath(certificate.pdf)} target="_blank" rel="noopener noreferrer" title={certificate.name} onMouseEnter={() => setActiveCertificate(index)} className={`h-1.5 rounded-full transition-all duration-300 ${activeCertificate === index ? "w-10 bg-foreground" : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"}`} />)}</div>
-    </div>
-  </>;
+  return <><div ref={spacerRef} className="h-[300vh] w-full relative z-10 pointer-events-none" /><div ref={fixedRef} className="fixed inset-0 z-10 h-screen w-full overflow-hidden bg-transparent pointer-events-none"><div className="absolute inset-0 opacity-20 pointer-events-none"><div className="absolute top-[15%] right-[8%] w-[520px] h-[520px] bg-primary/10 blur-[100px] rounded-full" /><div className="absolute bottom-[5%] left-[5%] w-[420px] h-[420px] bg-secondary/10 blur-[100px] rounded-full" /></div><div ref={contentRef} className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-50 pt-10 pb-32"><div className="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary/50 backdrop-blur-md border border-border/50 text-xs font-medium mb-6">Professional Milestones</div><h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50">Certificates<br />& Awards</h1><p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">Explore the certifications, training credentials, and professional milestones.</p><button onClick={() => window.scrollTo({ top: window.innerHeight * 1.1, behavior: "smooth" })} className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all group pointer-events-auto"><span>Scroll to Explore</span><ChevronDown className="w-4 h-4 animate-bounce" /></button></div><div ref={cardsRef} className="absolute inset-0 pointer-events-none">{featured.map((certificate, index) => <div key={certificate.id} className="absolute pointer-events-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/80 backdrop-blur-md group" style={{ top: index < 3 ? "15%" : "61%", left: index % 3 === 0 ? "5%" : index % 3 === 1 ? "39%" : "72%", width: index % 3 === 1 ? "20%" : "22%", height: index % 3 === 1 ? "22%" : "24%" }} onMouseEnter={() => setActiveCertificate(index)}><a href={encodePath(certificate.pdf)} target="_blank" rel="noopener noreferrer" className="block w-full h-full" aria-label={`Open ${certificate.name} certificate`}><img src={encodePath(certificate.image)} alt={certificate.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" /><div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-transparent" /><div className="absolute left-4 right-4 bottom-4"><div className="flex items-end justify-between gap-3"><span className="text-xs md:text-sm font-bold text-white leading-tight drop-shadow-lg line-clamp-2">{certificate.name}</span><ExternalLink className="w-4 h-4 text-white/80 shrink-0" /></div></div></a></div>)}</div><div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-[60] hidden md:flex items-center gap-2 pointer-events-auto">{featured.map((certificate, index) => <a key={certificate.id} href={encodePath(certificate.pdf)} target="_blank" rel="noopener noreferrer" title={certificate.name} onMouseEnter={() => setActiveCertificate(index)} className={`h-1.5 rounded-full transition-all duration-300 ${activeCertificate === index ? "w-10 bg-foreground" : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"}`} />)}</div></div></>;
 };
 
 export default CertificateHeroScroll;
