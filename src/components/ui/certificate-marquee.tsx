@@ -4,6 +4,7 @@ import { motion, MotionValue, useScroll, useTransform, useSpring } from "framer-
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import CertificatePdfPreview from "@/components/ui/CertificatePdfPreview";
 
 interface Certificate { id: string; title: string; image: string; pdf: string; }
 
@@ -34,7 +35,7 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
   const isPdf = certificate.pdf.toLowerCase().includes(".pdf") || certificate.pdf.startsWith("/api/certificates");
   return <div className="relative w-full overflow-hidden rounded-none bg-zinc-100 dark:bg-zinc-900 ring-1 ring-black/5 dark:ring-white/10 group" style={{ paddingTop: "75%" }}>
     <a href={encodePath(certificate.pdf)} target="_blank" rel="noopener noreferrer" aria-label={`Open ${certificate.title} certificate`} className="absolute inset-0 block">
-      {isPdf ? <iframe src={`${encodePath(certificate.pdf)}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} title={certificate.title} className="absolute -inset-y-px -left-2 w-[calc(100%+12px)] h-[calc(100%+2px)] border-0 bg-white pointer-events-none" loading="lazy" scrolling="no" /> : <img src={encodePath(certificate.image)} alt={certificate.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />}
+      {isPdf ? <CertificatePdfPreview src={encodePath(certificate.pdf)} /> : <img src={encodePath(certificate.image)} alt={certificate.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" /><div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-2 p-4"><span className="text-sm font-semibold leading-tight text-white drop-shadow-lg">{certificate.title}</span><ExternalLink className="h-4 w-4 shrink-0 text-white/90" /></div>
     </a>
   </div>;
@@ -49,7 +50,7 @@ export function CertificateShowcase() {
   const { height } = dimension; const y = useTransform(smoothProgress, [0, 1], [0, height * 1.2]); const y2 = useTransform(smoothProgress, [0, 1], [0, height * 2.0]); const y3 = useTransform(smoothProgress, [0, 1], [0, height * 0.8]);
 
   useEffect(() => { const resize = () => setDimension({ width: window.innerWidth, height: window.innerHeight }); window.addEventListener("resize", resize); resize(); return () => window.removeEventListener("resize", resize); }, []);
-  useEffect(() => { let cancelled = false; fetch('/api/certificates').then((response) => response.ok ? response.json() : Promise.reject(new Error('Certificate sync failed'))).then((payload) => { if (cancelled || !Array.isArray(payload.certificates) || payload.certificates.length === 0) return; setCertificates(payload.certificates.map((certificate: { id: string; title: string; image: string; credentialUrl: string }) => ({ id: certificate.id, title: certificate.title, image: certificate.image, pdf: certificate.credentialUrl }))); }).catch(() => undefined); return () => { cancelled = true; }; }, []);
+  useEffect(() => { let cancelled = false; fetch('/api/certificates').then((response) => response.ok ? response.json() : Promise.reject(new Error('Certificate sync failed'))).then((payload) => { if (cancelled || !Array.isArray(payload.certificates) || payload.certificates.length === 0) return; const remote = payload.certificates.filter((certificate: { credentialId?: string }) => { const path = String(certificate.credentialId || ''); return !/^Resumes\//i.test(path) && !/^Icat Internship\//i.test(path); }); setCertificates(remote.map((certificate: { id: string; title: string; image: string; credentialUrl: string }) => ({ id: certificate.id, title: certificate.title, image: certificate.image, pdf: certificate.credentialUrl }))); }).catch(() => undefined); return () => { cancelled = true; }; }, []);
 
   const columns = certificates.length ? certificates : FALLBACK_CERTIFICATES;
   const c1 = columns.filter((_, i) => i % 3 === 0).slice(0, 10); const c2 = columns.filter((_, i) => i % 3 === 1).slice(0, 10); const c3 = columns.filter((_, i) => i % 3 === 2).slice(0, 10);
