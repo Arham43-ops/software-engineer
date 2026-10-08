@@ -17,12 +17,15 @@ const FALLBACK_CERTIFICATES: CertificateItem[] = [
   { id: "fallback-6", name: "Building AI Chatbots", image: "/Certificate/Chatbots.png", pdf: "/Certificate/Chatbots.pdf" },
 ];
 
-const encodePath = (value: string) => value.split("/").map((part, i) => i === 0 ? part : encodeURIComponent(part)).join("/");
+const encodePath = (value: string) => {
+  if (value.startsWith("http://") || value.startsWith("https://") || value.startsWith("/api/")) return value;
+  return value.split("/").map((part, i) => i === 0 ? part : encodeURIComponent(part)).join("/");
+};
 
 const CertificatePreview = ({ certificate }: { certificate: CertificateItem }) => {
-  const isPdf = certificate.image.toLowerCase().includes(".pdf");
+  const isPdf = certificate.pdf.toLowerCase().includes(".pdf") || certificate.pdf.startsWith("/api/certificates");
   if (isPdf) {
-    return <iframe src={`${certificate.pdf}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} title={certificate.name} className="absolute inset-0 w-full h-full border-0 bg-white pointer-events-none" loading="lazy" />;
+    return <iframe src={`${encodePath(certificate.pdf)}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} title={certificate.name} className="absolute inset-0 w-full h-full border-0 bg-white pointer-events-none" loading="lazy" />;
   }
   return <img src={encodePath(certificate.image)} alt={certificate.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />;
 };
