@@ -5,39 +5,16 @@ const OWNER = 'Arham43-ops';
 const REPO = 'Certificates';
 const BRANCH = 'main';
 
-interface GitTreeItem {
-  path: string;
-  type: 'blob' | 'tree';
-}
-
-interface GitHubRepository {
-  pushed_at: string | null;
-}
-
+interface GitTreeItem { path: string; type: 'blob' | 'tree'; }
+interface GitHubRepository { pushed_at: string | null; }
 interface CertificateRecord {
-  id: string;
-  title: string;
-  issuer: string;
-  date: string;
-  description: string;
-  image: string;
-  credentialUrl: string;
-  credentialId: string;
-  tags: string[];
-  type: string;
-  category: 'certification' | 'award' | 'competition';
+  id: string; title: string; issuer: string; date: string; description: string;
+  image: string; credentialUrl: string; credentialId: string; tags: string[];
+  type: string; category: 'certification' | 'award' | 'competition';
 }
 
-const cleanTitle = (value: string) => {
-  return value
-    .replace(/\.pdf$/i, '')
-    .replace(/[_-]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-};
-
-const encodeGitHubPath = (value: string) =>
-  value.split('/').map((part) => encodeURIComponent(part)).join('/');
+const cleanTitle = (value: string) => value.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+const encodeGitHubPath = (value: string) => value.split('/').map((part) => encodeURIComponent(part)).join('/');
 
 const issuerFromFolder = (folder: string) => {
   const normalized = folder.toLowerCase();
@@ -58,66 +35,43 @@ const categoryFromFolder = (folder: string): CertificateRecord['category'] => {
 
 async function githubFetch<T>(url: string): Promise<T> {
   const response = await fetch(url, {
-    headers: {
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2026-03-10',
-    },
+    headers: { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2026-03-10' },
     next: { revalidate: 900 },
   });
-
-  if (!response.ok) {
-    throw new Error(`GitHub API request failed: ${response.status}`);
-  }
-
+  if (!response.ok) throw new Error(`GitHub API request failed: ${response.status}`);
   return response.json() as Promise<T>;
 }
 
 export async function GET() {
   try {
     const [tree, repository] = await Promise.all([
-      githubFetch<{ tree: GitTreeItem[]; truncated?: boolean }>(
-        `${GITHUB_API}/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`,
-      ),
+      githubFetch<{ tree: GitTreeItem[]; truncated?: boolean }>(`${GITHUB_API}/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`),
       githubFetch<GitHubRepository>(`${GITHUB_API}/repos/${OWNER}/${REPO}`),
     ]);
 
-    const files = tree.tree.filter(
-      (item) => item.type === 'blob' && /\.pdf$/i.test(item.path),
-    );
-
-    const imagePaths = new Set(
-      tree.tree
-        .filter((item) => item.type === 'blob' && /\.(png|jpe?g|webp)$/i.test(item.path))
-        .map((item) => item.path.replace(/\.(png|jpe?g|webp)$/i, '').toLowerCase()),
-    );
+    const files = tree.tree.filter((item) => item.type === 'blob' && /\.pdf$/i.test(item.path));
+    const previewImages = new Map<string, string>();
+    tree.tree
+      .filter((item) => item.type === 'blob' && /\.(png|jpe?g|webp)$/i.test(item.path))
+      .forEach((item) => previewImages.set(item.path.replace(/\.(png|jpe?g|webp)$/i, '').toLowerCase(), item.path));
 
     const fallbackDate = repository.pushed_at || new Date().toISOString();
-
     const certificates: CertificateRecord[] = files.map((file) => {
-      const encodedPath = encodeGitHubPath(file.path);
-      const rawUrl = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${encodedPath}`;
+      const rawUrl = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${encodeGitHubPath(file.path)}`;
       const folder = file.path.includes('/') ? file.path.split('/')[0] : 'Certificates';
-      const basePath = file.path.replace(/\.pdf$/i, '').toLowerCase();
-      const matchingImage = [...imagePaths].find((imagePath) => imagePath === basePath);
-      const imageUrl = matchingImage
-        ? `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${encodeGitHubPath(
-            file.path.replace(/\.pdf$/i, matchingImage.endsWith('.webp') ? '.webp' : matchingImage.endsWith('.jpg') ? '.jpg' : matchingImage.endsWith('.jpeg') ? '.jpeg' : '.png'),
-          )}`
+      const previewPath = previewImages.get(file.path.replace(/\.pdf$/i, '').toLowerCase());
+      const imageUrl = previewPath
+        ? `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${encodeGitHubPath(previewPath)}`
         : rawUrl;
-
       const title = cleanTitle(file.path.split('/').pop() || 'Certificate');
       const issuer = issuerFromFolder(folder);
       const category = categoryFromFolder(folder);
 
       return {
         id: `github-cert-${file.path.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`,
-        title,
-        issuer,
-        date: fallbackDate,
+        title, issuer, date: fallbackDate,
         description: `${title} — hosted in the ${folder} collection of the CERTIFICATES repository.`,
-        image: imageUrl,
-        credentialUrl: rawUrl,
-        credentialId: file.path,
+        image: imageUrl, credentialUrl: rawUrl, credentialId: file.path,
         tags: [issuer, folder],
         type: category === 'award' ? 'Internship / Recognition' : category === 'competition' ? 'Competition' : 'Certification',
         category,
@@ -125,26 +79,12 @@ export async function GET() {
     });
 
     certificates.sort((a, b) => a.title.localeCompare(b.title));
-
     return NextResponse.json(
-      {
-        source: `https://github.com/${OWNER}/${REPO}`,
-        branch: BRANCH,
-        count: certificates.length,
-        truncated: Boolean(tree.truncated),
-        certificates,
-      },
-      {
-        headers: {
-          'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=3600',
-        },
-      },
+      { source: `https://github.com/${OWNER}/${REPO}`, branch: BRANCH, count: certificates.length, truncated: Boolean(tree.truncated), certificates },
+      { headers: { 'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=3600' } },
     );
   } catch (error) {
     console.error('Certificate repository sync failed:', error);
-    return NextResponse.json(
-      { error: 'Unable to load certificates from GitHub.' },
-      { status: 502 },
-    );
+    return NextResponse.json({ error: 'Unable to load certificates from GitHub.' }, { status: 502 });
   }
 }
