@@ -16,7 +16,10 @@ const FALLBACK_CERTIFICATES: Certificate[] = [
   { id: "fallback-6", title: "Building AI Chatbots", image: "/Certificate/Chatbots.png", pdf: "/Certificate/Chatbots.pdf" },
 ];
 
-const encodePath = (path: string) => path.split("/").map((part, i) => i === 0 ? part : encodeURIComponent(part)).join("/");
+const encodePath = (path: string) => {
+  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("/api/")) return path;
+  return path.split("/").map((part, i) => i === 0 ? part : encodeURIComponent(part)).join("/");
+};
 
 function ScrambleButton({ href }: { href: string }) {
   const [displayText, setDisplayText] = useState("View All Achievements"); const [isScrambling, setIsScrambling] = useState(false);
@@ -28,10 +31,10 @@ function ScrambleButton({ href }: { href: string }) {
 type ColumnProps = { images: Certificate[]; y: MotionValue<number>; };
 
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
-  const isPdf = certificate.image.toLowerCase().includes(".pdf");
+  const isPdf = certificate.pdf.toLowerCase().includes(".pdf") || certificate.pdf.startsWith("/api/certificates");
   return <div className="relative w-full overflow-hidden rounded-none bg-zinc-100 dark:bg-zinc-900 ring-1 ring-black/5 dark:ring-white/10 group" style={{ paddingTop: "75%" }}>
     <a href={encodePath(certificate.pdf)} target="_blank" rel="noopener noreferrer" aria-label={`Open ${certificate.title} certificate`} className="absolute inset-0 block">
-      {isPdf ? <iframe src={`${certificate.pdf}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} title={certificate.title} className="absolute inset-0 h-full w-full border-0 bg-white pointer-events-none" loading="lazy" /> : <img src={encodePath(certificate.image)} alt={certificate.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />}
+      {isPdf ? <iframe src={`${encodePath(certificate.pdf)}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`} title={certificate.title} className="absolute inset-0 h-full w-full border-0 bg-white pointer-events-none" loading="lazy" /> : <img src={encodePath(certificate.image)} alt={certificate.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" /><div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-2 p-4"><span className="text-sm font-semibold leading-tight text-white drop-shadow-lg">{certificate.title}</span><ExternalLink className="h-4 w-4 shrink-0 text-white/90" /></div>
     </a>
   </div>;
