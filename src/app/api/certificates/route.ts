@@ -14,6 +14,7 @@ interface CertificateRecord {
 }
 
 const cleanTitle = (value: string) => value.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+const isExcludedPath = (value: string) => /^(Resumes|Icat Internship)(?:\/|$)/i.test(value);
 const encodeGitHubPath = (value: string) => value.split('/').map((part) => encodeURIComponent(part)).join('/');
 const encodeQueryPath = (value: string) => encodeURIComponent(value);
 
@@ -81,10 +82,10 @@ export async function GET(request: NextRequest) {
       githubFetch<GitHubRepository>(`${GITHUB_API}/repos/${OWNER}/${REPO}`),
     ]);
 
-    const files = tree.tree.filter((item) => item.type === 'blob' && /\.pdf$/i.test(item.path));
+    const files = tree.tree.filter((item) => item.type === 'blob' && /\.pdf$/i.test(item.path) && !isExcludedPath(item.path));
     const previewImages = new Map<string, string>();
     tree.tree
-      .filter((item) => item.type === 'blob' && /\.(png|jpe?g|webp)$/i.test(item.path))
+      .filter((item) => item.type === 'blob' && /\.(png|jpe?g|webp)$/i.test(item.path) && !isExcludedPath(item.path))
       .forEach((item) => previewImages.set(item.path.replace(/\.(png|jpe?g|webp)$/i, '').toLowerCase(), item.path));
 
     const fallbackDate = repository.pushed_at || new Date().toISOString();
