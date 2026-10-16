@@ -116,6 +116,7 @@ import { ThemeAwareClickSpark } from '@/components/ui/ThemeAwareClickSpark';
 import { ConditionalNavigation } from '@/components/layout/ConditionalNavigation';
 import { ArcPreloaderWrapper } from '@/components/layout/ArcPreloaderWrapper';
 import { ChatBot } from '@/components/layout/ChatBot';
+import { ChatNavBridge } from '@/components/layout/ChatNavBridge';
 
 const personSchema = {
     '@context': 'https://schema.org',
@@ -178,6 +179,7 @@ export default async function RootLayout({
                                         {children}
                                     </ConditionalNavigation>
                                 </ArcPreloaderWrapper>
+                                <ChatNavBridge />
                                 <ChatBot headless />
                             </ThemeAwareClickSpark>
                         </SmoothScrollProvider>
