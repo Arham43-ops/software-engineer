@@ -40,7 +40,12 @@ export function ChatNavBridge() {
                     node.textContent?.trim() === 'Coming soon to connect' ||
                     node.textContent?.trim() === 'AI portfolio assistant'
             );
-            if (description) description.textContent = 'AI portfolio assistant';
+
+            // Only update the text when necessary. This prevents the
+            // MutationObserver below from triggering itself indefinitely.
+            if (description && description.textContent?.trim() !== 'AI portfolio assistant') {
+                description.textContent = 'AI portfolio assistant';
+            }
         };
 
         const openChat = (card: HTMLElement) => {
@@ -74,7 +79,15 @@ export function ChatNavBridge() {
         };
 
         decorate();
-        const observer = new MutationObserver(decorate);
+
+        // CardNav mounts the dropdown dynamically when About is opened.
+        // Watch only for added/removed DOM nodes and keep the callback cheap.
+        const observer = new MutationObserver((mutations) => {
+            const relevantChange = mutations.some(
+                (mutation) => mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0
+            );
+            if (relevantChange) decorate();
+        });
         observer.observe(document.body, { childList: true, subtree: true });
 
         document.addEventListener('click', handleClick, true);
