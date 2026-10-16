@@ -3,10 +3,9 @@
 import { useEffect } from 'react';
 
 /**
- * Turns the existing CardNav "Chat" card into the trigger for the global
- * headless ChatBot. The ChatBot already listens for portfolio:toggle-chatbot.
- * Keeping the bridge separate means the existing navigation animation/layout
- * stays untouched.
+ * Connects the existing CardNav Chat card to the global headless ChatBot.
+ * The bridge deliberately uses the rendered card rather than duplicating the
+ * navigation UI, so the portfolio keeps one source of truth for the design.
  */
 export function ChatNavBridge() {
     useEffect(() => {
@@ -16,10 +15,7 @@ export function ChatNavBridge() {
                 const heading = Array.from(element.querySelectorAll('h4')).find(
                     (node) => node.textContent?.trim() === 'Chat'
                 );
-                const description = Array.from(element.querySelectorAll('p')).find(
-                    (node) => node.textContent?.trim() === 'Coming soon to connect'
-                );
-                return Boolean(heading && description);
+                return Boolean(heading);
             }) ?? null;
         };
 
@@ -31,11 +27,18 @@ export function ChatNavBridge() {
             card.setAttribute('role', 'button');
             card.setAttribute('tabindex', '0');
             card.setAttribute('aria-label', 'Open AI portfolio assistant');
+
+            // Override the original disabled/locked presentation from CardNav.
             card.classList.remove('cursor-not-allowed', 'opacity-70');
             card.classList.add('cursor-pointer');
+            card.style.cursor = 'pointer';
+            card.style.opacity = '1';
+            card.style.pointerEvents = 'auto';
 
             const description = Array.from(card.querySelectorAll('p')).find(
-                (node) => node.textContent?.trim() === 'Coming soon to connect'
+                (node) =>
+                    node.textContent?.trim() === 'Coming soon to connect' ||
+                    node.textContent?.trim() === 'AI portfolio assistant'
             );
             if (description) description.textContent = 'AI portfolio assistant';
         };
@@ -57,6 +60,7 @@ export function ChatNavBridge() {
             const card = target?.closest<HTMLElement>('[data-chat-trigger]');
             if (!card) return;
             event.preventDefault();
+            event.stopPropagation();
             openChat(card);
         };
 
