@@ -5,7 +5,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Menu, X, Moon, Sun, Globe, ChevronDown, Focus } from 'lucide-react';
+import { Menu, X, Focus } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 
@@ -42,7 +42,6 @@ function Clock() {
 }
 
 // Sub-links for the "About" dropdown
-// Sub-links for the "About" dropdown
 const useNavItems = () => {
     const t = useTranslations('navigation.menu');
     return [
@@ -62,7 +61,7 @@ const useNavItems = () => {
 export function Navbar() {
     const t = useTranslations('navigation');
     const navItems = useNavItems();
-    const { theme, setTheme, resolvedTheme } = useTheme();
+    const { resolvedTheme } = useTheme();
     const pathname = usePathname();
     const { scrollY } = useScroll();
 
@@ -71,8 +70,7 @@ export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [mounted, setMounted] = useState(false);
-    const [currentLocale, setCurrentLocale] = useState('en');
-    
+
     // Consume preload state directly from context
     const { isPreloading: isPreloadActive } = usePreloadState();
 
@@ -80,8 +78,6 @@ export function Navbar() {
 
     useEffect(() => {
         setMounted(true);
-        const locale = document.cookie.split('; ').find(row => row.startsWith('locale='))?.split('=')[1] || 'en';
-        setCurrentLocale(locale);
     }, []);
 
     // Lock body scroll when menu is open
@@ -119,13 +115,6 @@ export function Navbar() {
     const toggleMenu = useCallback(() => {
         setIsMenuOpen((prev) => !prev);
     }, []);
-
-    const toggleLocale = useCallback(() => {
-        const newLocale = currentLocale === 'en' ? 'id' : 'en';
-        document.cookie = `locale=${newLocale};path=/;max-age=31536000`;
-        setCurrentLocale(newLocale);
-        window.location.reload();
-    }, [currentLocale]);
 
     const closeMenu = useCallback(() => {
         setIsMenuOpen(false);
@@ -217,16 +206,6 @@ export function Navbar() {
                                 </Link>
                             </motion.button>
 
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={toggleLocale}
-                                className="p-2 md:p-2.5 rounded-full bg-muted/80 hover:bg-muted transition-colors"
-                                aria-label="Toggle language"
-                            >
-                                <Globe className="w-4 h-4" />
-                            </motion.button>
-
                             {mounted && (
                                 <AnimatedThemeToggler />
                             )}
@@ -253,93 +232,85 @@ export function Navbar() {
                         </div>
                     </motion.div>
                 </div>
-            </motion.nav >
+            </motion.nav>
 
             {/* Mobile Menu Overlay */}
             <AnimatePresence>
-                {
-                    isMenuOpen && (
+                {isMenuOpen && (
+                    <motion.div
+                        variants={menuVariants}
+                        initial="closed"
+                        animate="open"
+                        exit="closed"
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-[90] lg:hidden"
+                    >
                         <motion.div
-                            variants={menuVariants}
-                            initial="closed"
-                            animate="open"
-                            exit="closed"
-                            transition={{ duration: 0.3 }}
-                            className="fixed inset-0 z-[90] lg:hidden"
-                        >
-                            <motion.div
-                                className="absolute inset-0 bg-background"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                            />
+                            className="absolute inset-0 bg-background"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                        />
 
-                            <div className="relative flex flex-col items-center justify-center h-full overflow-y-auto py-20">
-                                <nav className="flex flex-col items-center gap-6">
-                                    {/* Mobile Home */}
-                                    <Link
-                                        href="/"
-                                        onClick={handleHomeClick}
-                                        className="text-3xl font-black text-muted-foreground hover:text-foreground transition-colors"
-                                    >
-                                        {t('home')}
-                                    </Link>
-
-                                    <Link
-                                        href="/contact"
-                                        onClick={closeMenu}
-                                        className="text-3xl font-black text-muted-foreground hover:text-foreground transition-colors"
-                                    >
-                                        {t('contact')}
-                                    </Link>
-
-                                    {/* Mobile Links grouped by Categories */}
-                                    {navItems.map((category) => (
-                                        <div key={category.label} className="flex flex-col items-center gap-4 py-4 border-b border-white/5 w-full last:border-0 text-center">
-                                            <span className="text-[10px] font-black font-mono text-primary tracking-[0.3em] uppercase opacity-50">
-                                                {category.label}
-                                            </span>
-                                            {category.links.map((link) => (
-                                                <Link
-                                                    key={link.label}
-                                                    href={link.href}
-                                                    onClick={closeMenu}
-                                                    className={cn(
-                                                        'text-2xl font-bold transition-all hover:scale-110 active:scale-95 duration-200',
-                                                        pathname === link.href ? 'text-foreground' : 'text-muted-foreground/60 hover:text-foreground'
-                                                    )}
-                                                >
-                                                    {link.label}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    ))}
-                                </nav>
-
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 20 }}
-                                    transition={{ delay: 0.5 }}
-                                    className="flex items-center gap-4 mt-12"
+                        <div className="relative flex flex-col items-center justify-center h-full overflow-y-auto py-20">
+                            <nav className="flex flex-col items-center gap-6">
+                                {/* Mobile Home */}
+                                <Link
+                                    href="/"
+                                    onClick={handleHomeClick}
+                                    className="text-3xl font-black text-muted-foreground hover:text-foreground transition-colors"
                                 >
-                                    <button
-                                        onClick={toggleLocale}
-                                        className="px-6 py-3 rounded-full glass-card text-sm font-medium hover:bg-muted/50 transition-colors"
-                                    >
-                                        {currentLocale === 'en' ? 'English' : 'Indonesia'}
-                                    </button>
-                                    {mounted && (
-                                        <AnimatedThemeToggler
-                                            className="px-6 py-6 glass-card text-sm font-medium hover:bg-muted/50 flex items-center gap-2"
-                                        />
-                                    )}
-                                </motion.div>
-                            </div>
-                        </motion.div >
-                    )
-                }
-            </AnimatePresence >
+                                    {t('home')}
+                                </Link>
+
+                                <Link
+                                    href="/contact"
+                                    onClick={closeMenu}
+                                    className="text-3xl font-black text-muted-foreground hover:text-foreground transition-colors"
+                                >
+                                    {t('contact')}
+                                </Link>
+
+                                {/* Mobile Links grouped by Categories */}
+                                {navItems.map((category) => (
+                                    <div key={category.label} className="flex flex-col items-center gap-4 py-4 border-b border-white/5 w-full last:border-0 text-center">
+                                        <span className="text-[10px] font-black font-mono text-primary tracking-[0.3em] uppercase opacity-50">
+                                            {category.label}
+                                        </span>
+                                        {category.links.map((link) => (
+                                            <Link
+                                                key={link.label}
+                                                href={link.href}
+                                                onClick={closeMenu}
+                                                className={cn(
+                                                    'text-2xl font-bold transition-all hover:scale-110 active:scale-95 duration-200',
+                                                    pathname === link.href ? 'text-foreground' : 'text-muted-foreground/60 hover:text-foreground'
+                                                )}
+                                            >
+                                                {link.label}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                ))}
+                            </nav>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 20 }}
+                                transition={{ delay: 0.5 }}
+                                className="flex items-center gap-4 mt-12"
+                            >
+                                {mounted && (
+                                    <AnimatedThemeToggler
+                                        className="px-6 py-6 glass-card text-sm font-medium hover:bg-muted/50 flex items-center gap-2"
+                                    />
+                                )}
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 }
