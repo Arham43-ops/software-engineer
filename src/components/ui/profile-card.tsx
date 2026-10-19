@@ -23,7 +23,7 @@ export function ProfileCard(props: ProfileCardProps) {
     name = "Michael Chen",
     title = "Senior Software Engineer, Cloud Infrastructure",
     description = "Michael Chen is a seasoned software engineer at TechFlow Solutions with over 8 years of experience building scalable cloud infrastructure and microservices. He specializes in DevOps automation and leads the platform engineering team that serves millions of users daily.",
-    imageUrl = "/about/hero-profile-artwork.svg",
+    imageUrl = "/about/hero-profile-artwork.png",
     githubUrl = "#",
     twitterUrl = "#",
     youtubeUrl = "#",
@@ -32,11 +32,6 @@ export function ProfileCard(props: ProfileCardProps) {
     className,
     onClose
   } = props;
-
-  // Keep existing callers compatible while routing the old portrait path to the new uploaded artwork.
-  const resolvedImageUrl = imageUrl === "/about/hero-profile-artwork.png"
-    ? "/about/hero-profile-artwork.svg"
-    : imageUrl;
 
   const socialIcons = [
     { icon: Github, url: githubUrl, label: "GitHub" },
@@ -58,7 +53,7 @@ export function ProfileCard(props: ProfileCardProps) {
       <div className='hidden md:flex relative items-center'>
         <div className='w-[480px] h-[480px] rounded-[2.5rem] overflow-hidden bg-gray-200 dark:bg-gray-800 flex-shrink-0 shadow-2xl relative z-0'>
           <Image
-            src={resolvedImageUrl}
+            src={imageUrl}
             alt={name}
             width={480}
             height={480}
@@ -103,7 +98,7 @@ export function ProfileCard(props: ProfileCardProps) {
       >
         <div className='w-full aspect-square bg-gray-200 dark:bg-gray-700 rounded-3xl overflow-hidden mb-6 flex items-center justify-center'>
           <Image
-            src={resolvedImageUrl}
+            src={imageUrl}
             alt={name}
             width={400}
             height={400}
